@@ -140,7 +140,7 @@ fn get_keypair_from_matches(
     } else if !config.keypair_path.is_empty() {
         &config.keypair_path
     } else {
-        path.extend(&[".config", "velas", "id.json"]);
+        path.extend(&[".config", "sophon", "id.json"]);
         path.to_str().unwrap()
     };
     signer_from_path(matches, path, "pubkey recovery", wallet_manager)
@@ -545,7 +545,7 @@ fn do_main(matches: &ArgMatches<'_>) -> Result<(), Box<dyn error::Error>> {
             } else if matches.is_present(NO_OUTFILE_ARG.name) {
                 None
             } else {
-                path.extend(&[".config", "velas", "id.json"]);
+                path.extend(&[".config", "sophon", "id.json"]);
                 Some(path.to_str().unwrap())
             };
 
@@ -588,7 +588,7 @@ fn do_main(matches: &ArgMatches<'_>) -> Result<(), Box<dyn error::Error>> {
             let outfile = if matches.is_present("outfile") {
                 matches.value_of("outfile").unwrap()
             } else {
-                path.extend(&[".config", "velas", "id.json"]);
+                path.extend(&[".config", "sophon", "id.json"]);
                 path.to_str().unwrap()
             };
 

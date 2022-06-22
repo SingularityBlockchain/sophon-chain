@@ -31,5 +31,5 @@ solana-stake-program = { path = "../programs/stake", version = "=1.6.14" }
 solana-vote-program = { path = "../programs/vote", version = "=1.6.14" }
 spl-token-v2-0 = { package = "spl-token", version = "=3.1.1", features = ["no-entrypoint"] }
 
-velas-account-program = { path = "../programs/velas-account-program" }
-velas-relying-party-program = { path = "../programs/velas-relying-party-program" }
+sophon-account-program = { path = "../programs/sophon-account-program" }
+sophon-relying-party-program = { path = "../programs/sophon-relying-party-program" }

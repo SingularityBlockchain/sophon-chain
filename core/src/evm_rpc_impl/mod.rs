@@ -175,7 +175,7 @@ impl GeneralERPC for GeneralErpcImpl {
     type Metadata = JsonRpcRequestProcessor;
 
     fn client_version(&self, _meta: Self::Metadata) -> Result<String, Error> {
-        Ok(String::from("velas-chain/v0.5.0"))
+        Ok(String::from("sophon-chain/v0.5.0"))
     }
 
     fn sha3(&self, _meta: Self::Metadata, bytes: Bytes) -> Result<Hex<H256>, Error> {
@@ -815,10 +815,10 @@ fn call_many(
         estimate_config,
         evm_state::executor::FeatureSet::new(
             bank.feature_set.is_active(
-                &solana_sdk::feature_set::velas::unsigned_tx_fix::id(),
+                &solana_sdk::feature_set::sophon::unsigned_tx_fix::id(),
             ),
             bank.feature_set.is_active(
-                &solana_sdk::feature_set::velas::clear_logs_on_error::id(),
+                &solana_sdk::feature_set::sophon::clear_logs_on_error::id(),
             ),
         ),
     );

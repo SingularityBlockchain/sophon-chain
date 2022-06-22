@@ -44,15 +44,15 @@ impl EvmProcessor {
         let (evm_state_account, keyed_accounts) = Self::check_evm_account(keyed_accounts)?;
 
         let cross_execution_enabled = invoke_context
-            .is_feature_active(&solana_sdk::feature_set::velas::evm_cross_execution::id());
+            .is_feature_active(&solana_sdk::feature_set::sophon::evm_cross_execution::id());
         let register_swap_tx_in_evm = invoke_context
-            .is_feature_active(&solana_sdk::feature_set::velas::native_swap_in_evm_history::id());
+            .is_feature_active(&solana_sdk::feature_set::sophon::native_swap_in_evm_history::id());
         let new_error_handling = invoke_context
-            .is_feature_active(&solana_sdk::feature_set::velas::evm_new_error_handling::id());
+            .is_feature_active(&solana_sdk::feature_set::sophon::evm_new_error_handling::id());
         let ignore_reset_on_cleared = invoke_context
-            .is_feature_active(&solana_sdk::feature_set::velas::ignore_reset_on_cleared::id());
+            .is_feature_active(&solana_sdk::feature_set::sophon::ignore_reset_on_cleared::id());
         let free_ownership_require_signer = invoke_context.is_feature_active(
-            &solana_sdk::feature_set::velas::free_ownership_require_signer::id(),
+            &solana_sdk::feature_set::sophon::free_ownership_require_signer::id(),
         );
 
         if cross_execution && !cross_execution_enabled {
@@ -1961,7 +1961,7 @@ mod test {
                 );
                 let mut invoke_context = MockInvokeContext::with_evm(executor);
                 invoke_context
-                    .disable_feature(&solana_sdk::feature_set::velas::clear_logs_on_error::id());
+                    .disable_feature(&solana_sdk::feature_set::sophon::clear_logs_on_error::id());
 
                 let _result = processor.process_instruction(
                     &crate::ID,
@@ -2025,7 +2025,7 @@ mod test {
                 );
                 let mut invoke_context = MockInvokeContext::with_evm(executor);
                 invoke_context
-                    .disable_feature(&solana_sdk::feature_set::velas::clear_logs_on_error::id());
+                    .disable_feature(&solana_sdk::feature_set::sophon::clear_logs_on_error::id());
 
                 let _result = processor.process_instruction(
                     &crate::ID,

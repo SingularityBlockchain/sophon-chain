@@ -1,13 +1,13 @@
 [package]
 authors = ["Solana Maintainers <maintainers@solana.foundation>"]
 edition = "2018"
-name = "velas-validator"
+name = "sophon-validator"
 description = "Blockchain, Rebuilt for Scale"
 version = "1.6.14"
 repository = "https://github.com/solana-labs/solana"
 license = "Apache-2.0"
-homepage = "https://velas.com/"
-default-run = "velas-validator"
+homepage = "https://sophon.com/"
+default-run = "sophon-validator"
 
 [dependencies]
 base64 = "0.12.3"

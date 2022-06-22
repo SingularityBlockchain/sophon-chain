@@ -241,7 +241,7 @@ pub fn parse_args<'a>(
 fn main() -> Result<(), Box<dyn error::Error>> {
     solana_logger::setup_with_default("off");
     let matches = get_clap_app(
-        "velas-cli",
+        "sophon-cli",
         crate_description!(),
         solana_version::version!(),
     )

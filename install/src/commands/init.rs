@@ -150,7 +150,7 @@ pub fn command_init(matches: &clap::ArgMatches, mode: Mode) -> Result<(), String
 
     let _ = fs::remove_dir_all(config.active_release_dir());
     symlink_dir(
-        release_dir.join("velas-release"),
+        release_dir.join("sophon-release"),
         config.active_release_dir(),
     )
     .map_err(|err| {
@@ -580,7 +580,7 @@ fn extract_release_archive(
 /// Reads the supported TARGET triple for the given release
 fn load_release_target(release_dir: &Path) -> Result<String, String> {
     let mut version_yml = PathBuf::from(release_dir);
-    version_yml.push("velas-release");
+    version_yml.push("sophon-release");
     version_yml.push("version.yml");
 
     let version = load_release_version(&version_yml)?;

@@ -455,7 +455,7 @@ pub fn set_panic_hook(program: &'static str) {
             flush();
 
             // Keep only rpc threads to avoid DoS on panic
-            if thread_name != "velas-rpc" {
+            if thread_name != "sophon-rpc" {
                 // Exit cleanly so the process don't limp along in a half-dead state
                 std::process::exit(1);
             }

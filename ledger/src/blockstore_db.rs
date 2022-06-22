@@ -107,7 +107,7 @@ pub enum BlockstoreError {
     ProtobufDecodeError(#[from] prost::DecodeError),
     ParentEntriesUnavailable,
     SlotUnavailable,
-    Other(&'static str), // TODO(velas): remove, use specific error variant
+    Other(&'static str), // TODO(sophon): remove, use specific error variant
 }
 pub type Result<T> = std::result::Result<T, BlockstoreError>;
 

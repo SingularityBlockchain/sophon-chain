@@ -531,7 +531,7 @@ impl GeneralERPC for GeneralErpcProxy {
 
     #[instrument]
     fn client_version(&self, _meta: Self::Metadata) -> EvmResult<String> {
-        Ok(String::from("VelasEvm/v0.5.0"))
+        Ok(String::from("SophonEvm/v0.5.0"))
     }
 
     #[instrument]

@@ -2598,7 +2598,7 @@ impl Bank {
 
     pub fn evm_burn_fee_activated(&self) -> bool {
         self.feature_set
-            .is_active(&feature_set::velas::burn_fee::id())
+            .is_active(&feature_set::sophon::burn_fee::id())
     }
 
     pub fn demote_sysvar_write_locks(&self) -> bool {
@@ -2846,7 +2846,7 @@ impl Bank {
     }
 
     pub fn check_tx_durable_nonce(&self, tx: &Transaction) -> Option<(Pubkey, AccountSharedData)> {
-        if self.feature_set.is_active(&feature_set::velas::disable_durable_nonce::id()) {
+        if self.feature_set.is_active(&feature_set::sophon::disable_durable_nonce::id()) {
             return None
         }
 
@@ -3255,10 +3255,10 @@ impl Bank {
                                 ),
                                 evm_state::executor::FeatureSet::new(
                                     self.feature_set.is_active(
-                                        &solana_sdk::feature_set::velas::unsigned_tx_fix::id(),
+                                        &solana_sdk::feature_set::sophon::unsigned_tx_fix::id(),
                                     ),
                                     self.feature_set.is_active(
-                                        &solana_sdk::feature_set::velas::clear_logs_on_error::id(),
+                                        &solana_sdk::feature_set::sophon::clear_logs_on_error::id(),
                                     ),
                                 ),
                             );
@@ -3297,7 +3297,7 @@ impl Bank {
                     );
                     let evm_new_error_handling = self
                         .feature_set
-                        .is_active(&solana_sdk::feature_set::velas::evm_new_error_handling::id());
+                        .is_active(&solana_sdk::feature_set::sophon::evm_new_error_handling::id());
 
                     if let Some(evm_executor) = evm_executor {
                         let executor = Rc::try_unwrap(evm_executor)
@@ -5232,7 +5232,7 @@ impl Bank {
 
         self.ensure_feature_builtins(init_finish_or_warp, &new_feature_activations);
         self.reconfigure_token2_native_mint(
-            new_feature_activations.contains(&feature_set::velas::hardfork_pack::id()),
+            new_feature_activations.contains(&feature_set::sophon::hardfork_pack::id()),
         );
         self.ensure_no_storage_rewards_pool();
     }
@@ -5334,7 +5334,7 @@ impl Bank {
         }
     }
 
-    fn reconfigure_token2_native_mint(&mut self, reconfigure_token2_native_mint_velas: bool) {
+    fn reconfigure_token2_native_mint(&mut self, reconfigure_token2_native_mint_sophon: bool) {
         let reconfigure_token2_native_mint_old = match self.cluster_type() {
             ClusterType::Development => true,
             ClusterType::Devnet => true,
@@ -5343,7 +5343,7 @@ impl Bank {
         };
 
         // It's okay if we trigget two activations sequentionally.
-        if reconfigure_token2_native_mint_old || reconfigure_token2_native_mint_velas {
+        if reconfigure_token2_native_mint_old || reconfigure_token2_native_mint_sophon {
             let mut native_mint_account = solana_sdk::account::AccountSharedData::from(Account {
                 owner: inline_spl_token_v2_0::id(),
                 data: inline_spl_token_v2_0::native_mint::ACCOUNT_DATA.to_vec(),
@@ -5384,7 +5384,7 @@ impl Bank {
             ClusterType::Development => false,
             // never do this for devnet; we're pristine here. :)
             ClusterType::Devnet => false,
-            // tds is not exist in velas so dont do this
+            // tds is not exist in sophon so dont do this
             ClusterType::Testnet => false,
             // never do this for stable; we're pristine here. :)
             ClusterType::MainnetBeta => false,
@@ -5411,12 +5411,12 @@ impl Bank {
 
     fn fix_spv_proofs_evm(&self) -> bool {
         self.feature_set
-            .is_active(&feature_set::velas::hardfork_pack::id())
+            .is_active(&feature_set::sophon::hardfork_pack::id())
     }
 
     fn fix_recent_blockhashes_sysvar_evm(&self) -> bool {
         self.feature_set
-            .is_active(&feature_set::velas::hardfork_pack::id())
+            .is_active(&feature_set::sophon::hardfork_pack::id())
     }
 
     fn fix_recent_blockhashes_sysvar_delay(&self) -> bool {
@@ -8504,8 +8504,8 @@ pub(crate) mod tests {
         let (genesis_config, mint_keypair) = create_genesis_config(40000);
         let mut bank = Bank::new(&genesis_config);
 
-        bank.activate_feature(&feature_set::velas::native_swap_in_evm_history::id());
-        bank.activate_feature(&feature_set::velas::evm_new_error_handling::id());
+        bank.activate_feature(&feature_set::sophon::native_swap_in_evm_history::id());
+        bank.activate_feature(&feature_set::sophon::evm_new_error_handling::id());
         let recent_hash = genesis_config.hash();
 
         let tx = fund_evm(&mint_keypair, recent_hash, 20000);
@@ -8602,8 +8602,8 @@ pub(crate) mod tests {
         let (genesis_config, mint_keypair) = create_genesis_config(20000);
         let mut bank = Bank::new(&genesis_config);
 
-        bank.activate_feature(&feature_set::velas::native_swap_in_evm_history::id());
-        bank.activate_feature(&feature_set::velas::evm_new_error_handling::id());
+        bank.activate_feature(&feature_set::sophon::native_swap_in_evm_history::id());
+        bank.activate_feature(&feature_set::sophon::evm_new_error_handling::id());
         let recent_hash = genesis_config.hash();
 
         let tx = fund_evm_with_revert(&mint_keypair, receiver, recent_hash, 20000);
@@ -8667,8 +8667,8 @@ pub(crate) mod tests {
         let (genesis_config, mint_keypair) = create_genesis_config(20000);
         let mut bank = Bank::new(&genesis_config);
 
-        bank.activate_feature(&feature_set::velas::native_swap_in_evm_history::id());
-        bank.activate_feature(&feature_set::velas::evm_new_error_handling::id());
+        bank.activate_feature(&feature_set::sophon::native_swap_in_evm_history::id());
+        bank.activate_feature(&feature_set::sophon::evm_new_error_handling::id());
         let recent_hash = genesis_config.hash();
 
         let tx = fund_evm_with_evm_call(&mint_keypair, receiver, recent_hash, 20000, 0);
@@ -8722,8 +8722,8 @@ pub(crate) mod tests {
         let (genesis_config, mint_keypair) = create_genesis_config(20000);
         let mut bank = Bank::new(&genesis_config);
 
-        bank.activate_feature(&feature_set::velas::native_swap_in_evm_history::id());
-        bank.activate_feature(&feature_set::velas::evm_new_error_handling::id());
+        bank.activate_feature(&feature_set::sophon::native_swap_in_evm_history::id());
+        bank.activate_feature(&feature_set::sophon::evm_new_error_handling::id());
         let recent_hash = genesis_config.hash();
 
         let tx = fund_evm(&mint_keypair, receiver, recent_hash, 20000);
@@ -11557,7 +11557,7 @@ pub(crate) mod tests {
         // No more slots should be shrunk
         assert_eq!(bank2.shrink_candidate_slots(), 0);
         // alive_counts represents the count of alive accounts in the three slots 0,1,2
-        assert_eq!(alive_counts, vec![11, 1, 7]); // TODO(velas): ensure we can cleanup EVM accounts
+        assert_eq!(alive_counts, vec![11, 1, 7]); // TODO(sophon): ensure we can cleanup EVM accounts
     }
 
     #[test]
@@ -12001,9 +12001,9 @@ pub(crate) mod tests {
         );
         bank.deposit(&inline_spl_token_v2_0::native_mint::id(), 4200000000);
 
-        // schedule activation of velas_hardfork_pack which contain spl token reconfigure patch
+        // schedule activation of sophon_hardfork_pack which contain spl token reconfigure patch
         bank.store_account_and_update_capitalization(
-            &feature_set::velas::hardfork_pack::id(),
+            &feature_set::sophon::hardfork_pack::id(),
             &feature::create_account(&Feature { activated_at: None }, feature_balance),
         );
         let bank = Bank::new_from_parent(
@@ -12931,7 +12931,7 @@ pub(crate) mod tests {
             .unwrap();
         genesis_config
             .accounts
-            .remove(&feature_set::full_inflation::devnet_and_testnet_velas_mainnet::id())
+            .remove(&feature_set::full_inflation::devnet_and_testnet_sophon_mainnet::id())
             .unwrap();
 
         let bank = Bank::new(&genesis_config);
@@ -12959,10 +12959,10 @@ pub(crate) mod tests {
         bank = new_from_parent(&Arc::new(bank));
         assert_eq!(bank.slot(), 3);
 
-        // Request `full_inflation::devnet_and_testnet_velas_mainnet` activation,
+        // Request `full_inflation::devnet_and_testnet_sophon_mainnet` activation,
         // which takes priority over pico_inflation
         bank.store_account(
-            &feature_set::full_inflation::devnet_and_testnet_velas_mainnet::id(),
+            &feature_set::full_inflation::devnet_and_testnet_sophon_mainnet::id(),
             &feature::create_account(
                 &Feature {
                     activated_at: Some(2),
@@ -13008,7 +13008,7 @@ pub(crate) mod tests {
             .unwrap();
         genesis_config
             .accounts
-            .remove(&feature_set::full_inflation::devnet_and_testnet_velas_mainnet::id())
+            .remove(&feature_set::full_inflation::devnet_and_testnet_sophon_mainnet::id())
             .unwrap();
 
         let bank = Bank::new(&genesis_config);
@@ -13063,10 +13063,10 @@ pub(crate) mod tests {
         bank = new_from_parent(&Arc::new(bank));
         assert_eq!(bank.slot(), 4);
 
-        // Request `full_inflation::devnet_and_testnet_velas_mainnet` activation,
+        // Request `full_inflation::devnet_and_testnet_sophon_mainnet` activation,
         // which takes priority over pico_inflation
         bank.store_account(
-            &feature_set::full_inflation::devnet_and_testnet_velas_mainnet::id(),
+            &feature_set::full_inflation::devnet_and_testnet_sophon_mainnet::id(),
             &feature::create_account(
                 &Feature {
                     activated_at: Some(bank.slot()),
@@ -13091,7 +13091,7 @@ pub(crate) mod tests {
             .unwrap();
         genesis_config
             .accounts
-            .remove(&feature_set::full_inflation::devnet_and_testnet_velas_mainnet::id())
+            .remove(&feature_set::full_inflation::devnet_and_testnet_sophon_mainnet::id())
             .unwrap();
 
         let mut bank = Bank::new(&genesis_config);
@@ -13119,10 +13119,10 @@ pub(crate) mod tests {
         }
         assert_eq!(bank.get_inflation_num_slots(), 2 * slots_per_epoch);
 
-        // Activate full_inflation::devnet_and_testnet_velas_mainnet
+        // Activate full_inflation::devnet_and_testnet_sophon_mainnet
         let full_inflation_activation_slot = bank.slot();
         bank.store_account(
-            &feature_set::full_inflation::devnet_and_testnet_velas_mainnet::id(),
+            &feature_set::full_inflation::devnet_and_testnet_sophon_mainnet::id(),
             &feature::create_account(
                 &Feature {
                     activated_at: Some(full_inflation_activation_slot),

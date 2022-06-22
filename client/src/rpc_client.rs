@@ -47,7 +47,7 @@ use {
 pub struct RpcClient {
     sender: Box<dyn RpcSender + Send + Sync + 'static>,
     commitment_config: CommitmentConfig,
-    #[allow(dead_code)] // NOTE(velas): single usage was removed, but keep this field
+    #[allow(dead_code)] // NOTE(sophon): single usage was removed, but keep this field
     node_version: RwLock<Option<semver::Version>>,
 }
 
@@ -136,7 +136,7 @@ impl RpcClient {
         Self::new_with_timeout(url, timeout)
     }
 
-    #[allow(dead_code)] // NOTE(velas): single usage was removed, but keep this field
+    #[allow(dead_code)] // NOTE(sophon): single usage was removed, but keep this field
     fn get_node_version(&self) -> Result<semver::Version, RpcError> {
         let r_node_version = self.node_version.read().unwrap();
         if let Some(version) = &*r_node_version {
@@ -219,7 +219,7 @@ impl RpcClient {
 
     #[allow(clippy::unnecessary_wraps)] // to keep interface compatible with solana
     fn default_cluster_transaction_encoding(&self) -> Result<UiTransactionEncoding, RpcError> {
-        Ok(UiTransactionEncoding::Base64) // Velas only supports base64 encoding
+        Ok(UiTransactionEncoding::Base64) // sophon only supports base64 encoding
     }
 
     pub fn send_transaction_with_config(

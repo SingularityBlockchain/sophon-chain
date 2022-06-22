@@ -477,34 +477,34 @@ impl rpc::rpc_full::Full for FullRpcSolProxy {
         )
     }
 
-    fn get_velas_accounts_by_operational_key(
+    fn get_sophon_accounts_by_operational_key(
         &self,
         meta: Self::Metadata,
         pubkey_str: String,
     ) -> Result<Response<Vec<String>>> {
         proxy_sol_rpc!(
             meta.rpc_client,
-            GetVelasAccountsByOperationalKey,
+            GetSophonAccountsByOperationalKey,
             pubkey_str
         )
     }
 
-    fn get_velas_accounts_by_owner_key(
+    fn get_sophon_accounts_by_owner_key(
         &self,
         meta: Self::Metadata,
         pubkey_str: String,
     ) -> Result<Response<Vec<String>>> {
-        proxy_sol_rpc!(meta.rpc_client, GetVelasAccountsByOwnerKey, pubkey_str)
+        proxy_sol_rpc!(meta.rpc_client, GetSophonAccountsByOwnerKey, pubkey_str)
     }
 
-    fn get_velas_relying_parties_by_owner_key(
+    fn get_sophon_relying_parties_by_owner_key(
         &self,
         meta: Self::Metadata,
         pubkey_str: String,
     ) -> Result<Response<Vec<String>>> {
         proxy_sol_rpc!(
             meta.rpc_client,
-            GetVelasRelyingPartiesByOwnerKey,
+            GetSophonRelyingPartiesByOwnerKey,
             pubkey_str
         )
     }

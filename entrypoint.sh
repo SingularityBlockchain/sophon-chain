@@ -16,11 +16,11 @@ get_my_ip() {
 }
 
 stake_account_exist() {
-    velas --keypair $datadir/identity.json --url $rpc_url stake-account $datadir/stake-account.json
+    sophon --keypair $datadir/identity.json --url $rpc_url stake-account $datadir/stake-account.json
 }
 
 vote_account_exist() {
-    velas --keypair $datadir/identity.json --url $rpc_url vote-account $datadir/vote-account.json
+    sophon --keypair $datadir/identity.json --url $rpc_url vote-account $datadir/vote-account.json
 }
 
 run_solana_validator() {
@@ -30,7 +30,7 @@ run_solana_validator() {
     declare rpc_port=$4
     
     set +e # FALL BACK to entrypoint RPC, DONT FAIL.
-    rpc_url=$(velas-gossip rpc-url --timeout 180 --entrypoint $entrypoint) # get rpc url
+    rpc_url=$(sophon-gossip rpc-url --timeout 180 --entrypoint $entrypoint) # get rpc url
     if [ $? -ne 0 ]; then
         rpc_url=http://$(echo $entrypoint | cut -d ':' -f 1):8899
     fi
@@ -40,25 +40,25 @@ run_solana_validator() {
         # airdrop on devnet only
         "devnet" | "development")
             if ! vote_account_exist; then
-                velas-keygen new --no-passphrase -so $datadir/identity.json #try to generate identity
-                velas-keygen new --no-passphrase -so $datadir/vote-account.json #try to generate vote account
-                velas --keypair /config/faucet.json --url $rpc_url transfer $datadir/identity.json $(($MIN_VALIDATOR_STAKE + $MIN_RENT_FEE))
-                velas --keypair $datadir/identity.json --url $rpc_url create-vote-account $datadir/vote-account.json $datadir/identity.json
+                sophon-keygen new --no-passphrase -so $datadir/identity.json #try to generate identity
+                sophon-keygen new --no-passphrase -so $datadir/vote-account.json #try to generate vote account
+                sophon --keypair /config/faucet.json --url $rpc_url transfer $datadir/identity.json $(($MIN_VALIDATOR_STAKE + $MIN_RENT_FEE))
+                sophon --keypair $datadir/identity.json --url $rpc_url create-vote-account $datadir/vote-account.json $datadir/identity.json
             fi
             
             if ! stake_account_exist; then
                 # TODO: Airdrop tokens if not enough
-                vote_account=$(velas address --keypair $datadir/vote-account.json)
-                velas-keygen new --no-passphrase -so $datadir/stake-account.json
-                velas --keypair $datadir/identity.json --url $rpc_url create-stake-account $datadir/stake-account.json $MIN_VALIDATOR_STAKE
-                stake_account=$(velas address --keypair $datadir/stake-account.json)
-                velas --keypair $datadir/identity.json --url $rpc_url delegate-stake --force $stake_account $vote_account
+                vote_account=$(sophon address --keypair $datadir/vote-account.json)
+                sophon-keygen new --no-passphrase -so $datadir/stake-account.json
+                sophon --keypair $datadir/identity.json --url $rpc_url create-stake-account $datadir/stake-account.json $MIN_VALIDATOR_STAKE
+                stake_account=$(sophon address --keypair $datadir/stake-account.json)
+                sophon --keypair $datadir/identity.json --url $rpc_url delegate-stake --force $stake_account $vote_account
             fi
         ;;
     esac
     
     
-    velas-validator \
+    sophon-validator \
     --max-genesis-archive-unpacked-size 1073741824 \
     --entrypoint $entrypoint  \
     --identity $datadir/identity.json \
@@ -78,7 +78,7 @@ run_solana_bootstrap() {
     declare host=$2
     declare port_range=$3
     declare rpc_port=$4
-    velas-validator \
+    sophon-validator \
     --enable-rpc-transaction-history \
     --gossip-host $host \
     --ledger $datadir \
@@ -146,10 +146,10 @@ fetch_program() {
     
 }
 generate_first_node() {
-    velas-keygen new --no-passphrase -fso $DATADIR/faucet.json
-    velas-keygen new --no-passphrase -so $DATADIR/identity.json
-    velas-keygen new --no-passphrase -so $DATADIR/vote-account.json
-    velas-keygen new --no-passphrase -so $DATADIR/stake-account.json
+    sophon-keygen new --no-passphrase -fso $DATADIR/faucet.json
+    sophon-keygen new --no-passphrase -so $DATADIR/identity.json
+    sophon-keygen new --no-passphrase -so $DATADIR/vote-account.json
+    sophon-keygen new --no-passphrase -so $DATADIR/stake-account.json
     
     fetch_program token 3.1.0 TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA BPFLoader2111111111111111111111111111111111
     fetch_program memo  1.0.0 Memo1UhkJRfHyvLMcVucJwxXeuD728EqVDDwQDxFMNo BPFLoader1111111111111111111111111111111111
@@ -166,7 +166,7 @@ generate_first_node() {
             FAUCET_LAMPORTS=100000000000 # num for 1m tx
         ;;
     esac
-    velas-genesis --max-genesis-archive-unpacked-size 1073741824 --enable-warmup-epochs --bootstrap-validator $DATADIR/identity.json $DATADIR/vote-account.json $DATADIR/stake-account.json --bpf-program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA BPFLoader2111111111111111111111111111111111 spl_token-3.1.0.so --bpf-program Memo1UhkJRfHyvLMcVucJwxXeuD728EqVDDwQDxFMNo BPFLoader1111111111111111111111111111111111 spl_memo-1.0.0.so --bpf-program MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr BPFLoader2111111111111111111111111111111111 spl_memo-3.0.0.so --bpf-program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL BPFLoader2111111111111111111111111111111111 spl_associated-token-account-1.0.1.so --bpf-program Feat1YXHhH6t1juaWF74WLcfv4XoNocjXA6sPWHNgAse BPFLoader2111111111111111111111111111111111 spl_feature-proposal-1.0.0.so --ledger $DATADIR --faucet-pubkey $DATADIR/faucet.json --faucet-lamports $FAUCET_LAMPORTS --hashes-per-tick auto --cluster-type $NETWORK
+    sophon-genesis --max-genesis-archive-unpacked-size 1073741824 --enable-warmup-epochs --bootstrap-validator $DATADIR/identity.json $DATADIR/vote-account.json $DATADIR/stake-account.json --bpf-program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA BPFLoader2111111111111111111111111111111111 spl_token-3.1.0.so --bpf-program Memo1UhkJRfHyvLMcVucJwxXeuD728EqVDDwQDxFMNo BPFLoader1111111111111111111111111111111111 spl_memo-1.0.0.so --bpf-program MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr BPFLoader2111111111111111111111111111111111 spl_memo-3.0.0.so --bpf-program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL BPFLoader2111111111111111111111111111111111 spl_associated-token-account-1.0.1.so --bpf-program Feat1YXHhH6t1juaWF74WLcfv4XoNocjXA6sPWHNgAse BPFLoader2111111111111111111111111111111111 spl_feature-proposal-1.0.0.so --ledger $DATADIR --faucet-pubkey $DATADIR/faucet.json --faucet-lamports $FAUCET_LAMPORTS --hashes-per-tick auto --cluster-type $NETWORK
 }
 
 case "${NODE_TYPE}" in

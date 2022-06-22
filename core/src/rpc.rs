@@ -94,8 +94,8 @@ use std::{
 };
 
 use tracing_attributes::instrument;
-use velas_account_program::{VelasAccountType, ACCOUNT_LEN as VELAS_ACCOUNT_SIZE};
-use velas_relying_party_program::RelyingPartyData;
+use sophon_account_program::{SophonAccountType, ACCOUNT_LEN as VELAS_ACCOUNT_SIZE};
+use sophon_relying_party_program::RelyingPartyData;
 
 pub const MAX_REQUEST_PAYLOAD_SIZE: usize = 200 * (1 << 10); // 200kB perviously: 50 * (1 << 10); // 50kB
 pub const PERFORMANCE_SAMPLES_LIMIT: usize = 720;
@@ -171,7 +171,7 @@ impl Metadata for JsonRpcRequestProcessor {}
 
 impl JsonRpcRequestProcessor {
     #[allow(deprecated)]
-    // TODO(velas): hide it again
+    // TODO(sophon): hide it again
     pub(crate) fn bank(&self, commitment: Option<CommitmentConfig>) -> Arc<Bank> {
         debug!("RPC commitment_config: {:?}", commitment);
         let r_bank_forks = self.bank_forks.read().unwrap();
@@ -639,7 +639,7 @@ impl JsonRpcRequestProcessor {
         }
     }
 
-    // TODO(velas): hide it again
+    // TODO(sophon): hide it again
     pub fn get_slot(&self, commitment: Option<CommitmentConfig>) -> Slot {
         self.bank(commitment).slot()
     }
@@ -2156,63 +2156,63 @@ impl JsonRpcRequestProcessor {
         block
     }
 
-    fn get_velas_accounts_by_storage_key(
+    fn get_sophon_accounts_by_storage_key(
         &self,
         bank: &Arc<Bank>,
         storage_key: Pubkey,
     ) -> Option<Vec<(Pubkey, AccountSharedData)>> {
         // this filter doesn't dismiss accounts which are not related to specified storage_key
-        let is_target_velas_account = |account: &AccountSharedData| -> bool {
-            account.owner == velas_account_program::id()
+        let is_target_sophon_account = |account: &AccountSharedData| -> bool {
+            account.owner == sophon_account_program::id()
                 && account.data.len() == VELAS_ACCOUNT_SIZE
                 && matches!(
-                    VelasAccountType::try_from(account.data.as_slice()),
-                    Ok(VelasAccountType::Account(_account_info))
+                    SophonAccountType::try_from(account.data.as_slice()),
+                    Ok(SophonAccountType::Account(_account_info))
                 )
         };
 
         self.config
             .account_indexes
-            .contains(&AccountIndex::VelasAccountStorage)
+            .contains(&AccountIndex::SophonAccountStorage)
             .then(|| {
                 bank.get_filtered_indexed_accounts(
-                    &IndexKey::VelasAccountStorage(storage_key),
-                    is_target_velas_account,
+                    &IndexKey::SophonAccountStorage(storage_key),
+                    is_target_sophon_account,
                 )
             })
     }
 
-    fn get_velas_accounts_by_owner_key(
+    fn get_sophon_accounts_by_owner_key(
         &self,
         bank: &Arc<Bank>,
         owner_key: Pubkey,
     ) -> Option<Vec<(Pubkey, AccountSharedData)>> {
-        let is_target_velas_account_storage = |account: &AccountSharedData| -> bool {
-            account.owner == velas_account_program::id()
-                && match VelasAccountType::try_from(account.data.as_slice()) {
-                    Ok(VelasAccountType::Account(account)) => account.owners.contains(&owner_key),
+        let is_target_sophon_account_storage = |account: &AccountSharedData| -> bool {
+            account.owner == sophon_account_program::id()
+                && match SophonAccountType::try_from(account.data.as_slice()) {
+                    Ok(SophonAccountType::Account(account)) => account.owners.contains(&owner_key),
                     _ => false,
                 }
         };
 
         self.config
             .account_indexes
-            .contains(&AccountIndex::VelasAccountOwner)
+            .contains(&AccountIndex::SophonAccountOwner)
             .then(|| {
                 bank.get_filtered_indexed_accounts(
-                    &IndexKey::VelasAccountOwner(owner_key),
-                    is_target_velas_account_storage,
+                    &IndexKey::SophonAccountOwner(owner_key),
+                    is_target_sophon_account_storage,
                 )
             })
     }
 
-    fn get_velas_relying_party_by_owner_key(
+    fn get_sophon_relying_party_by_owner_key(
         &self,
         bank: &Arc<Bank>,
         owner_key: Pubkey,
     ) -> Option<Vec<(Pubkey, AccountSharedData)>> {
-        let is_target_velas_account_storage = |account: &AccountSharedData| -> bool {
-            account.owner == velas_relying_party_program::id()
+        let is_target_sophon_account_storage = |account: &AccountSharedData| -> bool {
+            account.owner == sophon_relying_party_program::id()
                 && match RelyingPartyData::try_from(account.data.as_slice()) {
                     Ok(acc) => acc.authority == owner_key,
                     _ => false,
@@ -2221,24 +2221,24 @@ impl JsonRpcRequestProcessor {
 
         self.config
             .account_indexes
-            .contains(&AccountIndex::VelasRelyingOwner)
+            .contains(&AccountIndex::SophonRelyingOwner)
             .then(|| {
                 bank.get_filtered_indexed_accounts(
-                    &IndexKey::VelasRelyingOwner(owner_key),
-                    is_target_velas_account_storage,
+                    &IndexKey::SophonRelyingOwner(owner_key),
+                    is_target_sophon_account_storage,
                 )
             })
     }
 
-    fn get_velas_accounts_storages_by_operational_key(
+    fn get_sophon_accounts_storages_by_operational_key(
         &self,
         bank: &Arc<Bank>,
         operational_key: Pubkey,
     ) -> Option<Vec<(Pubkey, AccountSharedData)>> {
-        let is_target_velas_account_storage = |account: &AccountSharedData| -> bool {
-            account.owner == velas_account_program::id()
-                && match VelasAccountType::try_from(account.data.as_slice()) {
-                    Ok(VelasAccountType::Storage(account_storage)) => account_storage
+        let is_target_sophon_account_storage = |account: &AccountSharedData| -> bool {
+            account.owner == sophon_account_program::id()
+                && match SophonAccountType::try_from(account.data.as_slice()) {
+                    Ok(SophonAccountType::Storage(account_storage)) => account_storage
                         .operationals
                         .iter()
                         .any(|operational| operational.pubkey == operational_key),
@@ -2248,11 +2248,11 @@ impl JsonRpcRequestProcessor {
 
         self.config
             .account_indexes
-            .contains(&AccountIndex::VelasAccountOperational)
+            .contains(&AccountIndex::SophonAccountOperational)
             .then(|| {
                 bank.get_filtered_indexed_accounts(
-                    &IndexKey::VelasAccountOperational(operational_key),
-                    is_target_velas_account_storage,
+                    &IndexKey::SophonAccountOperational(operational_key),
+                    is_target_sophon_account_storage,
                 )
             })
     }
@@ -3101,22 +3101,22 @@ pub mod rpc_full {
             config: Option<RpcAccountInfoConfig>,
         ) -> Result<RpcResponse<Vec<RpcKeyedAccount>>>;
 
-        #[rpc(meta, name = "getVelasAccountsByOperationalKey")]
-        fn get_velas_accounts_by_operational_key(
+        #[rpc(meta, name = "getSophonAccountsByOperationalKey")]
+        fn get_sophon_accounts_by_operational_key(
             &self,
             meta: Self::Metadata,
             pubkey_str: String,
         ) -> Result<RpcResponse<Vec<String>>>;
 
-        #[rpc(meta, name = "getVelasAccountsByOwnerKey")]
-        fn get_velas_accounts_by_owner_key(
+        #[rpc(meta, name = "getSophonAccountsByOwnerKey")]
+        fn get_sophon_accounts_by_owner_key(
             &self,
             meta: Self::Metadata,
             pubkey_str: String,
         ) -> Result<RpcResponse<Vec<String>>>;
 
-        #[rpc(meta, name = "getVelasRelyingPartiesByOwnerKey")]
-        fn get_velas_relying_parties_by_owner_key(
+        #[rpc(meta, name = "getSophonRelyingPartiesByOwnerKey")]
+        fn get_sophon_relying_parties_by_owner_key(
             &self,
             meta: Self::Metadata,
             pubkey_str: String,
@@ -4031,26 +4031,26 @@ pub mod rpc_full {
             meta.get_token_accounts_by_delegate(&delegate, token_account_filter, config)
         }
 
-        // Velas scope
+        // Sophon scope
 
-        fn get_velas_accounts_by_owner_key(
+        fn get_sophon_accounts_by_owner_key(
             &self,
             meta: Self::Metadata,
             pubkey_str: String,
         ) -> Result<RpcResponse<Vec<String>>> {
             debug!(
-                "get_velas_accounts_by_owner_key rpc request received: {:?}",
+                "get_sophon_accounts_by_owner_key rpc request received: {:?}",
                 pubkey_str
             );
 
-            check_index!(&meta.config, AccountIndex::VelasAccountOwner);
+            check_index!(&meta.config, AccountIndex::SophonAccountOwner);
 
             let owner_key = verify_pubkey(&pubkey_str)?;
             let bank = meta.bank(None);
 
-            let accounts = meta.get_velas_accounts_by_owner_key(&bank, owner_key);
+            let accounts = meta.get_sophon_accounts_by_owner_key(&bank, owner_key);
             debug!(
-                "get_velas_accounts_by_owner_key velas accounts {:?}",
+                "get_sophon_accounts_by_owner_key sophon accounts {:?}",
                 accounts
             );
 
@@ -4064,24 +4064,24 @@ pub mod rpc_full {
             ))
         }
 
-        fn get_velas_relying_parties_by_owner_key(
+        fn get_sophon_relying_parties_by_owner_key(
             &self,
             meta: Self::Metadata,
             pubkey_str: String,
         ) -> Result<RpcResponse<Vec<String>>> {
             debug!(
-                "get_velas_relying_parties_by_owner_key rpc request received: {:?}",
+                "get_sophon_relying_parties_by_owner_key rpc request received: {:?}",
                 pubkey_str
             );
 
-            check_index!(&meta.config, AccountIndex::VelasRelyingOwner);
+            check_index!(&meta.config, AccountIndex::SophonRelyingOwner);
 
             let owner_key = verify_pubkey(&pubkey_str)?;
             let bank = meta.bank(None);
 
-            let accounts = meta.get_velas_relying_party_by_owner_key(&bank, owner_key);
+            let accounts = meta.get_sophon_relying_party_by_owner_key(&bank, owner_key);
             debug!(
-                "get_velas_relying_parties_by_owner_key velas accounts storages {:?}",
+                "get_sophon_relying_parties_by_owner_key sophon accounts storages {:?}",
                 accounts
             );
 
@@ -4095,38 +4095,38 @@ pub mod rpc_full {
             ))
         }
 
-        fn get_velas_accounts_by_operational_key(
+        fn get_sophon_accounts_by_operational_key(
             &self,
             meta: Self::Metadata,
             pubkey_str: String,
         ) -> Result<RpcResponse<Vec<String>>> {
             debug!(
-                "get_velas_accounts_by_operational_key rpc request received: {:?}",
+                "get_sophon_accounts_by_operational_key rpc request received: {:?}",
                 pubkey_str
             );
 
-            check_index!(&meta.config, AccountIndex::VelasAccountOperational);
-            check_index!(&meta.config, AccountIndex::VelasAccountStorage);
+            check_index!(&meta.config, AccountIndex::SophonAccountOperational);
+            check_index!(&meta.config, AccountIndex::SophonAccountStorage);
 
             let operational_key = verify_pubkey(&pubkey_str)?;
             let bank = meta.bank(None);
 
             let storages =
-                meta.get_velas_accounts_storages_by_operational_key(&bank, operational_key);
+                meta.get_sophon_accounts_storages_by_operational_key(&bank, operational_key);
             debug!(
-                "get_velas_accounts_by_operational_key velas accounts storages {:?}",
+                "get_sophon_accounts_by_operational_key sophon accounts storages {:?}",
                 storages
             );
 
             let accounts = storages
-                .expect("velas account operational index to be activated")
+                .expect("sophon account operational index to be activated")
                 .into_iter()
                 .flat_map(|(storage, _)| {
-                    meta.get_velas_accounts_by_storage_key(&bank, storage)
-                        .expect("velas account storage index to be activated")
+                    meta.get_sophon_accounts_by_storage_key(&bank, storage)
+                        .expect("sophon account storage index to be activated")
                 });
             debug!(
-                "get_velas_accounts_by_operational_key velas accounts {:?}",
+                "get_sophon_accounts_by_operational_key sophon accounts {:?}",
                 accounts
             );
 

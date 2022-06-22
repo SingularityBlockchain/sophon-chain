@@ -1,5 +1,5 @@
 [package]
-name = "velas-relying-party-program"
+name = "sophon-relying-party-program"
 version = "0.0.1"
 edition = "2018"
 

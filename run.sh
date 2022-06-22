@@ -17,7 +17,7 @@ fi
 PATH=$PWD/target/$profile:$PATH
 
 ok=true
-for program in velas-{faucet,genesis,keygen,validator}; do
+for program in sophon-{faucet,genesis,keygen,validator}; do
     $program -V || ok=false
 done
 $ok || {
@@ -37,27 +37,27 @@ ledgerDir=$PWD/config/ledger
 SOLANA_RUN_SH_CLUSTER_TYPE=${SOLANA_RUN_SH_CLUSTER_TYPE:-development}
 
 set -x
-if ! velas address; then
+if ! sophon address; then
     echo Generating default keypair
-    velas-keygen new --no-passphrase
+    sophon-keygen new --no-passphrase
 fi
 validator_identity="$dataDir/validator-identity.json"
 if [[ -e $validator_identity ]]; then
     echo "Use existing validator keypair"
 else
-    velas-keygen new --no-passphrase -so "$validator_identity"
+    sophon-keygen new --no-passphrase -so "$validator_identity"
 fi
 validator_vote_account="$dataDir/validator-vote-account.json"
 if [[ -e $validator_vote_account ]]; then
     echo "Use existing validator vote account keypair"
 else
-    velas-keygen new --no-passphrase -so "$validator_vote_account"
+    sophon-keygen new --no-passphrase -so "$validator_vote_account"
 fi
 validator_stake_account="$dataDir/validator-stake-account.json"
 if [[ -e $validator_stake_account ]]; then
     echo "Use existing validator stake account keypair"
 else
-    velas-keygen new --no-passphrase -so "$validator_stake_account"
+    sophon-keygen new --no-passphrase -so "$validator_stake_account"
 fi
 
 if [[ -e "$ledgerDir"/genesis.bin || -e "$ledgerDir"/genesis.tar.bz2 ]]; then
@@ -69,7 +69,7 @@ else
     fi
     
     # shellcheck disable=SC2086
-    velas-genesis \
+    sophon-genesis \
     --hashes-per-tick sleep \
     --faucet-lamports 500000000000000000 \
     --bootstrap-validator \
@@ -93,7 +93,7 @@ abort() {
 }
 trap abort INT TERM EXIT
 
-velas-faucet &
+sophon-faucet &
 faucet=$!
 
 args=(
@@ -115,13 +115,13 @@ args=(
     --account-index program-id
     --account-index spl-token-owner
     --account-index spl-token-mint
-    --account-index velas-accounts-storages
-    --account-index velas-accounts-owners
-    --account-index velas-accounts-operationals
+    --account-index sophon-accounts-storages
+    --account-index sophon-accounts-owners
+    --account-index sophon-accounts-operationals
     --evm-state-archive "$ledgerDir"/archive-evm
 )
 # shellcheck disable=SC2086
-velas-validator "${args[@]}" $SOLANA_RUN_SH_VALIDATOR_ARGS &
+sophon-validator "${args[@]}" $SOLANA_RUN_SH_VALIDATOR_ARGS &
 validator=$!
 
 wait "$validator"

@@ -1128,7 +1128,7 @@ impl<'a> StakeAccount for KeyedAccount<'a> {
                         split.data_len()? as u64,
                     );
 
-                    // TODO(velas): check if we can revert updates below to solana upstream
+                    // TODO(sophon): check if we can revert updates below to solana upstream
                     let self_min_balance = meta.rent_exempt_reserve + MIN_DELEGATE_STAKE_AMOUNT;
                     let split_min_balance = split_rent_exempt_reserve + MIN_DELEGATE_STAKE_AMOUNT;
 
@@ -1190,7 +1190,7 @@ impl<'a> StakeAccount for KeyedAccount<'a> {
                         split.data_len()? as u64,
                     );
 
-                    // TODO(velas): check if we can revert updates below to solana upstream
+                    // TODO(sophon): check if we can revert updates below to solana upstream
                     let self_min_balance = meta.rent_exempt_reserve + MIN_DELEGATE_STAKE_AMOUNT;
                     let split_min_balance = split_rent_exempt_reserve + MIN_DELEGATE_STAKE_AMOUNT;
 

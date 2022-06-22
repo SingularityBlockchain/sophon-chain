@@ -27,7 +27,7 @@ pub mod pico_inflation {
 }
 
 pub mod full_inflation {
-    pub mod devnet_and_testnet_velas_mainnet {
+    pub mod devnet_and_testnet_sophon_mainnet {
         solana_sdk::declare_id!("DT4n6ABDqs6w4bnfwrXT9rsprcPf6cdDga1egctaPkLC");
     }
 
@@ -146,7 +146,7 @@ pub mod system_transfer_zero_check {
     solana_sdk::declare_id!("EqohBJpJsJym3qAJ3N7AH35c4u2rfS5yYvS693ThYTbG");
 }
 
-pub mod velas {
+pub mod sophon {
     pub mod hardfork_pack {
         // 1. difficulty not a hash but a number.
         // 2. transactionRoot, receiptRoot - should calculate, and empty hashes should be setted too
@@ -198,7 +198,7 @@ lazy_static! {
         (consistent_recent_blockhashes_sysvar::id(), "consistent recentblockhashes sysvar"),
         (deprecate_rewards_sysvar::id(), "deprecate unused rewards sysvar"),
         (pico_inflation::id(), "pico inflation"),
-        (full_inflation::devnet_and_testnet_velas_mainnet::id(), "full inflation on devnet and testnet"),
+        (full_inflation::devnet_and_testnet_sophon_mainnet::id(), "full inflation on devnet and testnet"),
         (spl_token_v2_multisig_fix::id(), "spl-token multisig fix"),
         (no_overflow_rent_distribution::id(), "no overflow rent distribution"),
         (stake_program_v2::id(), "solana_stake_program v2"),
@@ -232,17 +232,17 @@ lazy_static! {
             (keccak256_syscall_enabled::id(), "keccak256 syscall"),
             (stake_program_v4::id(), "solana_stake_program v4"),
             (system_transfer_zero_check::id(), "perform all checks for transfers of 0 lamports"),
-            // Velas features
-            (velas::hardfork_pack::id(), "EVMblockhashes sysvar history, roothashes calculation. Apply old (reconfigure_native_token, unlock_switch_vote)."),
-            (velas::evm_cross_execution::id(), "EVM cross execution."),
-            (velas::native_swap_in_evm_history::id(), "Native swap in evm history."),
-            (velas::evm_new_error_handling::id(), "EVM new error handling."),
-            (velas::unsigned_tx_fix::id(), "Authorized transaction hash fixed."),
-            (velas::ignore_reset_on_cleared::id(), "Don't reset evm_swap address balance, when it already swapped, to avoid empty blocks."),
-            (velas::free_ownership_require_signer::id(), "Free ownership require signer."),
-            (velas::burn_fee::id(), "Burn fee during transaction execution."),
-            (velas::clear_logs_on_error::id(), "Clear logs from receipt if transaction is failed or reverted."),
-            (velas::disable_durable_nonce::id(), "Disable durable nonce."),
+            // Sophon features
+            (sophon::hardfork_pack::id(), "EVMblockhashes sysvar history, roothashes calculation. Apply old (reconfigure_native_token, unlock_switch_vote)."),
+            (sophon::evm_cross_execution::id(), "EVM cross execution."),
+            (sophon::native_swap_in_evm_history::id(), "Native swap in evm history."),
+            (sophon::evm_new_error_handling::id(), "EVM new error handling."),
+            (sophon::unsigned_tx_fix::id(), "Authorized transaction hash fixed."),
+            (sophon::ignore_reset_on_cleared::id(), "Don't reset evm_swap address balance, when it already swapped, to avoid empty blocks."),
+            (sophon::free_ownership_require_signer::id(), "Free ownership require signer."),
+            (sophon::burn_fee::id(), "Burn fee during transaction execution."),
+            (sophon::clear_logs_on_error::id(), "Clear logs from receipt if transaction is failed or reverted."),
+            (sophon::disable_durable_nonce::id(), "Disable durable nonce."),
             /*************** ADD NEW FEATURES HERE ***************/
         ]
     ).collect();
@@ -316,8 +316,8 @@ impl FeatureSet {
             })
             .collect::<HashSet<_>>();
 
-        if self.is_active(&full_inflation::devnet_and_testnet_velas_mainnet::id()) {
-            hash_set.insert(full_inflation::devnet_and_testnet_velas_mainnet::id());
+        if self.is_active(&full_inflation::devnet_and_testnet_sophon_mainnet::id()) {
+            hash_set.insert(full_inflation::devnet_and_testnet_sophon_mainnet::id());
         }
         hash_set
     }
@@ -341,10 +341,10 @@ mod test {
         assert!(feature_set.full_inflation_features_enabled().is_empty());
         feature_set
             .active
-            .insert(full_inflation::devnet_and_testnet_velas_mainnet::id(), 42);
+            .insert(full_inflation::devnet_and_testnet_sophon_mainnet::id(), 42);
         assert_eq!(
             feature_set.full_inflation_features_enabled(),
-            [full_inflation::devnet_and_testnet_velas_mainnet::id()]
+            [full_inflation::devnet_and_testnet_sophon_mainnet::id()]
                 .iter()
                 .cloned()
                 .collect()

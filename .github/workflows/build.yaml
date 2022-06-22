@@ -5,7 +5,7 @@ on:
     branches:
       - develop
       - devnet
-      - 'build/**'
+      - "build/**"
 
 jobs:
   docker-build-push:
@@ -32,11 +32,10 @@ jobs:
         id: build
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: velas-solana
+          ECR_REPOSITORY: sophon-solana
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --no-cache .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=repository::$ECR_REPOSITORY"
           echo "::set-output name=image_tag::$IMAGE_TAG"
-

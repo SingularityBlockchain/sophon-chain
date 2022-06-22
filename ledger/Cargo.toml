@@ -63,7 +63,7 @@ evm-state = { path = "../evm-utils/evm-state" }
 # version = "0.16.0"
 default-features = false
 features = ["lz4"]
-git = "https://github.com/velas/rust-rocksdb"
+git = "https://github.com/sophon/rust-rocksdb"
 branch = "transaction"
 version = "0.17.0"
 

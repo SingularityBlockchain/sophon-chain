@@ -159,7 +159,7 @@ pub fn create_genesis_config_with_leader(
     }
 }
 
-pub fn activate_velas_features_on_prod(genesis_config: &mut GenesisConfig) {
+pub fn activate_sophon_features_on_prod(genesis_config: &mut GenesisConfig) {
     for feature_id in (*solana_sdk::feature_set::FEATURE_NAMES_BEFORE_MAINNET).keys() {
         genesis_config.accounts.insert(
             *feature_id,

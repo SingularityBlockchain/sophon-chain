@@ -374,7 +374,7 @@ pub fn signer_from_path_with_config(
         SignerSourceKind::Filepath(path) => match read_keypair_file(&path) {
             Err(e) => Err(std::io::Error::new(
                 std::io::ErrorKind::Other,
-                format!("could not read keypair file \"{}\". Run \"velas-keygen new\" to create a keypair file: {}", path, e),
+                format!("could not read keypair file \"{}\". Run \"sophon-keygen new\" to create a keypair file: {}", path, e),
             )
             .into()),
             Ok(file) => Ok(Box::new(file)),

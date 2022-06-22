@@ -1,5 +1,5 @@
 [package]
-name = "velas-account-program"
+name = "sophon-account-program"
 version = "0.0.1"
 edition = "2018"
 

@@ -16,19 +16,19 @@
 { # this ensures the entire script is downloaded #
     
     if [ -z "$SOLANA_DOWNLOAD_ROOT" ]; then
-        SOLANA_DOWNLOAD_ROOT="https://github.com/velas/velas-chain/releases/download/"
+        SOLANA_DOWNLOAD_ROOT="https://github.com/sophon/sophon-chain/releases/download/"
     fi
-    GH_LATEST_RELEASE="https://api.github.com/repos/velas/velas-chain/releases/latest"
+    GH_LATEST_RELEASE="https://api.github.com/repos/sophon/sophon-chain/releases/latest"
     
     set -e
     
     usage() {
     cat 1>&2 <<EOF
-velas-install-init
+sophon-install-init
 initializes a new installation
 
 USAGE:
-    velas-install-init [FLAGS] [OPTIONS] --data_dir <PATH> --pubkey <PUBKEY>
+    sophon-install-init [FLAGS] [OPTIONS] --data_dir <PATH> --pubkey <PUBKEY>
 
 FLAGS:
     -h, --help              Prints help information
@@ -74,7 +74,7 @@ EOF
             ;;
         esac
         
-        temp_dir="$(mktemp -d 2>/dev/null || ensure mktemp -d -t velas-install-init)"
+        temp_dir="$(mktemp -d 2>/dev/null || ensure mktemp -d -t sophon-install-init)"
         ensure mkdir -p "$temp_dir"
         
         # Check for SOLANA_RELEASE environment variable override.  Otherwise fetch
@@ -94,8 +94,8 @@ EOF
             fi
         fi
         
-        download_url="$SOLANA_DOWNLOAD_ROOT/$release/velas-install-init-$TARGET"
-        solana_install_init="$temp_dir/velas-install-init"
+        download_url="$SOLANA_DOWNLOAD_ROOT/$release/sophon-install-init-$TARGET"
+        solana_install_init="$temp_dir/sophon-install-init"
         
         printf 'downloading %s installer\n' "$release" 1>&2
         
@@ -104,7 +104,7 @@ EOF
         ensure chmod u+x "$solana_install_init"
         if [ ! -x "$solana_install_init" ]; then
             printf '%s\n' "Cannot execute $solana_install_init (likely because of mounting /tmp as noexec)." 1>&2
-            printf '%s\n' "Please copy the file to a location where you can execute binaries and run ./velas-install-init." 1>&2
+            printf '%s\n' "Please copy the file to a location where you can execute binaries and run ./sophon-install-init." 1>&2
             exit 1
         fi
         
@@ -125,7 +125,7 @@ EOF
     }
     
     err() {
-        printf 'velas-install-init: %s\n' "$1" >&2
+        printf 'sophon-install-init: %s\n' "$1" >&2
         exit 1
     }
     

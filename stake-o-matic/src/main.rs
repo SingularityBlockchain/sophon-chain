@@ -475,12 +475,12 @@ fn get_config() -> Config {
     let (json_rpc_url, validator_list) = match cluster.as_str() {
         "mainnet" => (
             value_t!(matches, "json_rpc_url", String)
-                .unwrap_or_else(|_| "https://api.mainnet.velas.com".into()),
+                .unwrap_or_else(|_| "https://api.mainnet.sophon.com".into()),
             validator_list::mainnet_beta_validators(),
         ),
         "testnet" => (
             value_t!(matches, "json_rpc_url", String)
-                .unwrap_or_else(|_| "https://api.testnet.velas.com".into()),
+                .unwrap_or_else(|_| "https://api.testnet.sophon.com".into()),
             validator_list::testnet_validators(),
         ),
         "unknown" => {

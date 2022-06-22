@@ -77,7 +77,7 @@ pub fn main() -> Result<(), String> {
         )
         .subcommand(
             SubCommand::with_name("versions")
-                .about("Shows available versions of velas software")
+                .about("Shows available versions of sophon software")
                 .setting(AppSettings::DisableVersion),
         )
         .get_matches();
@@ -91,7 +91,7 @@ pub fn main() -> Result<(), String> {
 }
 
 pub fn main_init() -> Result<(), String> {
-    let matches = App::new("velas-install-init")
+    let matches = App::new("sophon-install-init")
         .about("Initializes a new installation")
         .version(solana_version::version!())
         .arg({

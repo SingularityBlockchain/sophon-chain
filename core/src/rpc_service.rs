@@ -309,7 +309,7 @@ impl JsonRpcService {
         let runtime = Arc::new(
             tokio::runtime::Builder::new_multi_thread()
                 .worker_threads(rpc_threads)
-                .thread_name("velas-rpc")
+                .thread_name("sophon-rpc")
                 .enable_all()
                 .build()
                 .expect("Runtime"),
@@ -398,7 +398,7 @@ impl JsonRpcService {
                     .unwrap_or_else(|| Targets::default().with_default(LevelFilter::WARN));
 
                 let tracer = opentelemetry_jaeger::new_pipeline()
-                    .with_service_name("velas-jsonrpc-tracer")
+                    .with_service_name("sophon-jsonrpc-tracer")
                     .with_collector_endpoint(collector)
                     .install_batch(opentelemetry::runtime::Tokio)
                     .unwrap();
@@ -418,7 +418,7 @@ impl JsonRpcService {
 
         let (close_handle_sender, close_handle_receiver) = channel();
         let thread_hdl = Builder::new()
-            .name("velas-jsonrpc".to_string())
+            .name("sophon-jsonrpc".to_string())
             .spawn(move || {
                 let mut io = MetaIoHandler::default();
 
@@ -555,7 +555,7 @@ mod tests {
             None,
         );
         let thread = rpc_service.thread_hdl.thread();
-        assert_eq!(thread.name().unwrap(), "velas-jsonrpc");
+        assert_eq!(thread.name().unwrap(), "sophon-jsonrpc");
 
         assert_eq!(
             10_000,

@@ -250,7 +250,7 @@ mod tests {
         let packets: Vec<_> = (0..2).map(|_| vec![0u8; PACKET_DATA_SIZE]).collect();
         let ip4 = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(127, 0, 0, 1)), 8080);
         let _ip6 = SocketAddr::new(IpAddr::V6(Ipv6Addr::new(0, 0, 0, 0, 0, 0, 0, 0)), 8080);
-        // NOTE(velas): Looks like v6 doesn't works on MacOS w/o additional tweaks
+        // NOTE(sophon): Looks like v6 doesn't works on MacOS w/o additional tweaks
         let packet_refs: Vec<_> = vec![(&packets[0], &ip4)];
         // let packet_refs: Vec<_> = vec![(&packets[0], &ip4), (&packets[1], &ip6)];
         let sender = UdpSocket::bind("127.0.0.1:0").expect("bind");

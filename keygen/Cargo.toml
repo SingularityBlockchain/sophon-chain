@@ -22,7 +22,7 @@ solana-version = { path = "../version", version = "=0.5.2" }
 tiny-bip39 = "0.7.0"
 
 [[bin]]
-name = "velas-keygen"
+name = "sophon-keygen"
 path = "src/keygen.rs"
 
 [package.metadata.docs.rs]

@@ -106,10 +106,10 @@ pub enum RpcRequest {
     EthTraceReplayTransaction,
     EthTraceReplayBlock,
 
-    /// Velas Account scope
-    GetVelasAccountsByOperationalKey,
-    GetVelasAccountsByOwnerKey,
-    GetVelasRelyingPartiesByOwnerKey,
+    /// Sophon Account scope
+    GetSophonAccountsByOperationalKey,
+    GetSophonAccountsByOwnerKey,
+    GetSophonRelyingPartiesByOwnerKey,
 }
 
 #[allow(deprecated)]
@@ -200,9 +200,9 @@ impl fmt::Display for RpcRequest {
             RpcRequest::EthEstimateGas => "eth_estimateGas",
             RpcRequest::EthGetLogs => "eth_getLogs",
             RpcRequest::EthSyncing => "eth_syncing",
-            RpcRequest::GetVelasAccountsByOperationalKey => "getVelasAccountsByOperationalKey",
-            RpcRequest::GetVelasAccountsByOwnerKey => "getVelasAccountsByOwnerKey",
-            RpcRequest::GetVelasRelyingPartiesByOwnerKey => "getVelasRelyingPartiesByOwnerKey",
+            RpcRequest::GetSophonAccountsByOperationalKey => "getSophonAccountsByOperationalKey",
+            RpcRequest::GetSophonAccountsByOwnerKey => "getSophonAccountsByOwnerKey",
+            RpcRequest::GetSophonRelyingPartiesByOwnerKey => "getSophonRelyingPartiesByOwnerKey",
         };
 
         write!(f, "{}", method)

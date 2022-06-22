@@ -94,7 +94,7 @@ echo --- Creating release tarball
 
   tar cvf "${TARBALL_BASENAME}"-$TARGET.tar "${RELEASE_BASENAME}"
   bzip2 "${TARBALL_BASENAME}"-$TARGET.tar
-  cp "${RELEASE_BASENAME}"/bin/velas-install-init velas-install-init-$TARGET
+  cp "${RELEASE_BASENAME}"/bin/sophon-install-init sophon-install-init-$TARGET
   cp "${RELEASE_BASENAME}"/version.yml "${TARBALL_BASENAME}"-$TARGET.yml
 )
 
@@ -113,7 +113,7 @@ echo --- Creating release tarball
 
 source ci/upload-ci-artifact.sh
 
-for file in "${TARBALL_BASENAME}"-$TARGET.tar.bz2 "${TARBALL_BASENAME}"-$TARGET.yml velas-install-init-"$TARGET"* $MAYBE_TARBALLS; do
+for file in "${TARBALL_BASENAME}"-$TARGET.tar.bz2 "${TARBALL_BASENAME}"-$TARGET.yml sophon-install-init-"$TARGET"* $MAYBE_TARBALLS; do
   if [[ -n $DO_NOT_PUBLISH_TAR ]]; then
     upload-ci-artifact "$file"
     echo "Skipped $file due to DO_NOT_PUBLISH_TAR"

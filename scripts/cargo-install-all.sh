@@ -65,10 +65,10 @@ if [[ $CI_OS_NAME = windows ]]; then
     # Limit windows to end-user command-line tools.  Full validator support is not
     # yet available on windows
     BINS=(
-        velas
-        velas-install
-        velas-install-init
-        velas-keygen
+        sophon
+        sophon-install
+        sophon-install-init
+        sophon-keygen
         evm-bridge
     )
 else
@@ -83,21 +83,21 @@ else
     BINS=(
         cargo-build-bpf
         cargo-test-bpf
-        velas
-        velas-faucet
-        velas-gossip
-        velas-install
-        velas-install-init
-        velas-keygen
-        velas-test-validator
-        velas-validator
+        sophon
+        sophon-faucet
+        sophon-gossip
+        sophon-install
+        sophon-install-init
+        sophon-keygen
+        sophon-test-validator
+        sophon-validator
         solana-ledger-tool
         evm-bridge
     )
     
     #XXX: Ensure `solana-genesis` is built LAST!
     # See https://github.com/solana-labs/solana/issues/5826
-    BINS+=(velas-genesis)
+    BINS+=(sophon-genesis)
 fi
 
 binArgs=()

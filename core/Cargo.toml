@@ -91,8 +91,8 @@ secp256k1 = { version = "0.19.0", features = ["recovery", "global-context"] }
 evm-state = { path = "../evm-utils/evm-state" }
 evm-rpc = { path = "../evm-utils/evm-rpc" }
 solana-evm-loader-program = { path = "../evm-utils/programs/evm_loader" }
-velas-account-program = { path = "../programs/velas-account-program" }
-velas-relying-party-program = { path = "../programs/velas-relying-party-program" }
+sophon-account-program = { path = "../programs/sophon-account-program" }
+sophon-relying-party-program = { path = "../programs/sophon-relying-party-program" }
 
 tracing = "0.1.29"
 tracing-fmt = { version="0.1.1" }

@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://velas.com">
-    <img alt="Velas chain" src="https://i.imgur.com/1AHYxYP.png" width="250" />
+  <a href="https://sophon.com">
+    <img alt="Sophon chain" src="https://i.imgur.com/1AHYxYP.png" width="250" />
   </a>
 </p>
 
@@ -20,7 +20,7 @@ Please sure you are always using the latest stable rust version by running:
 $ rustup update
 ```
 
-On Linux systems you may need to install libssl-dev, pkg-config, zlib1g-dev, etc.  On Ubuntu:
+On Linux systems you may need to install libssl-dev, pkg-config, zlib1g-dev, etc. On Ubuntu:
 
 ```bash
 $ sudo apt-get update
@@ -30,8 +30,8 @@ $ sudo apt-get install libssl-dev libudev-dev pkg-config zlib1g-dev llvm clang m
 ## **2. Download the source code.**
 
 ```bash
-$ git clone https://github.com/velas/velas-chain.git
-$ cd velas-chain
+$ git clone https://github.com/sophon/sophon-chain.git
+$ cd sophon-chain
 ```
 
 ## **3. Build.**
@@ -41,6 +41,7 @@ $ cargo build
 ```
 
 ## **4. Run a minimal local cluster.**
+
 ```bash
 $ ./run.sh
 ```
@@ -54,14 +55,17 @@ $ cargo test --no-fail-fast
 ```
 
 ### EVM integration
-Info about EVM integration is at our [docs](https://docs.velas.com/evm).
+
+Info about EVM integration is at our [docs](https://docs.sophon.com/evm).
 
 ### Starting a local testnet
-Start your own Development network locally, instructions are in the [online docs](https://docs.velas.com/cluster/bench-tps).
+
+Start your own Development network locally, instructions are in the [online docs](https://docs.sophon.com/cluster/bench-tps).
 
 ### Accessing the remote testnet and mainnet
-* `testnet` - public accessible via bootstrap.testnet.veladev.net.
-* `mainnet` - public accessible via bootstrap.velas.com.
+
+- `testnet` - public accessible via bootstrap.testnet.veladev.net.
+- `mainnet` - public accessible via bootstrap.sophon.com.
 
 # Benchmarking
 
@@ -81,4 +85,3 @@ $ cargo +nightly bench
 # Release Process
 
 The release process for this project is described [here](RELEASE.md).
-

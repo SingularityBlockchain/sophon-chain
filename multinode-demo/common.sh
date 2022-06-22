@@ -25,23 +25,23 @@ if [[ $(uname) != Linux ]]; then
 fi
 
 if [[ -n $USE_INSTALL || ! -f "$SOLANA_ROOT"/Cargo.toml ]]; then
-    velas_program() {
+    sophon_program() {
         declare program="$1"
         if [[ -z $program ]]; then
-            printf "velas"
+            printf "sophon"
         else
-            printf "velas-%s" "$program"
+            printf "sophon-%s" "$program"
         fi
     }
 else
-  velas_program() {
+  sophon_program() {
     declare program="$1"
     declare crate="$program"
     if [[ -z $program ]]; then
       crate="cli"
-      program="velas"
+      program="sophon"
     else
-      program="velas-$program"
+      program="sophon-$program"
     fi
 
     if [[ -n $NDEBUG ]]; then
@@ -61,15 +61,15 @@ else
   }
 fi
 
-velas_bench_tps=$(velas_program bench-tps)
-velas_faucet=$(velas_program faucet solana)
-velas_validator=$(velas_program validator)
-velas_validator_cuda="$velas_validator --cuda"
-velas_genesis=$(velas_program genesis solana)
-velas_gossip=$(velas_program gossip)
-velas_keygen=$(velas_program keygen)
-velas_ledger_tool=$(velas_program ledger-tool)
-velas_cli=$(velas_program)
+sophon_bench_tps=$(sophon_program bench-tps)
+sophon_faucet=$(sophon_program faucet solana)
+sophon_validator=$(sophon_program validator)
+sophon_validator_cuda="$sophon_validator --cuda"
+sophon_genesis=$(sophon_program genesis solana)
+sophon_gossip=$(sophon_program gossip)
+sophon_keygen=$(sophon_program keygen)
+sophon_ledger_tool=$(sophon_program ledger-tool)
+sophon_cli=$(sophon_program)
 
 export RUST_BACKTRACE=1
 

@@ -57,7 +57,7 @@ pub(crate) use self::tests::reconstruct_accounts_db_via_serialization;
 
 pub(crate) use crate::accounts_db::{SnapshotStorage, SnapshotStorages};
 
-// NOTE(velas):
+// NOTE(sophon):
 // - old enum `SerdeStyle` was removed as single variant enum
 // - this enum should be treated as new, EVM only related enum without any previous history
 #[derive(Copy, Clone, Eq, PartialEq, Debug)]

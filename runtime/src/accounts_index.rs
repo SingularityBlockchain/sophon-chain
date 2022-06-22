@@ -27,8 +27,8 @@ use std::{
     },
 };
 
-use velas_account_program::{VAccountStorage, VelasAccountType};
-use velas_relying_party_program::RelyingPartyData;
+use sophon_account_program::{VAccountStorage, SophonAccountType};
+use sophon_relying_party_program::RelyingPartyData;
 
 pub const ITER_BATCH_SIZE: usize = 1000;
 
@@ -67,10 +67,10 @@ pub enum IndexKey {
     ProgramId(Pubkey),
     SplTokenMint(Pubkey),
     SplTokenOwner(Pubkey),
-    VelasAccountStorage(Pubkey),
-    VelasAccountOwner(Pubkey),
-    VelasAccountOperational(Pubkey),
-    VelasRelyingOwner(Pubkey),
+    SophonAccountStorage(Pubkey),
+    SophonAccountOwner(Pubkey),
+    SophonAccountOperational(Pubkey),
+    SophonRelyingOwner(Pubkey),
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -78,10 +78,10 @@ pub enum AccountIndex {
     ProgramId,
     SplTokenMint,
     SplTokenOwner,
-    VelasAccountStorage,
-    VelasAccountOwner,
-    VelasAccountOperational,
-    VelasRelyingOwner,
+    SophonAccountStorage,
+    SophonAccountOwner,
+    SophonAccountOperational,
+    SophonRelyingOwner,
 }
 
 #[derive(Debug, PartialEq, Eq, Clone)]
@@ -305,10 +305,10 @@ pub struct AccountsIndex<T> {
     ongoing_scan_roots: RwLock<BTreeMap<Slot, u64>>,
     zero_lamport_pubkeys: DashSet<Pubkey>,
     // EVM Indices
-    velas_account_storage_index: SecondaryIndex<DashMapSecondaryIndexEntry>,
-    velas_account_owner_index: SecondaryIndex<DashMapSecondaryIndexEntry>,
-    velas_account_operational_index: SecondaryIndex<DashMapSecondaryIndexEntry>,
-    velas_relying_party_owner_index: SecondaryIndex<DashMapSecondaryIndexEntry>,
+    sophon_account_storage_index: SecondaryIndex<DashMapSecondaryIndexEntry>,
+    sophon_account_owner_index: SecondaryIndex<DashMapSecondaryIndexEntry>,
+    sophon_account_operational_index: SecondaryIndex<DashMapSecondaryIndexEntry>,
+    sophon_relying_party_owner_index: SecondaryIndex<DashMapSecondaryIndexEntry>,
 }
 
 impl<T> Default for AccountsIndex<T> {
@@ -329,17 +329,17 @@ impl<T> Default for AccountsIndex<T> {
             zero_lamport_pubkeys: DashSet::<Pubkey>::default(),
             //
             // EVM Indices
-            velas_account_storage_index: SecondaryIndex::<DashMapSecondaryIndexEntry>::new(
-                "velas_account_storage_index",
+            sophon_account_storage_index: SecondaryIndex::<DashMapSecondaryIndexEntry>::new(
+                "sophon_account_storage_index",
             ),
-            velas_account_owner_index: SecondaryIndex::<DashMapSecondaryIndexEntry>::new(
-                "velas_account_owner_index",
+            sophon_account_owner_index: SecondaryIndex::<DashMapSecondaryIndexEntry>::new(
+                "sophon_account_owner_index",
             ),
-            velas_account_operational_index: SecondaryIndex::<DashMapSecondaryIndexEntry>::new(
-                "velas_account_operational_index",
+            sophon_account_operational_index: SecondaryIndex::<DashMapSecondaryIndexEntry>::new(
+                "sophon_account_operational_index",
             ),
-            velas_relying_party_owner_index: SecondaryIndex::<DashMapSecondaryIndexEntry>::new(
-                "velas_relying_party_owner_index",
+            sophon_relying_party_owner_index: SecondaryIndex::<DashMapSecondaryIndexEntry>::new(
+                "sophon_relying_party_owner_index",
             ),
         }
     }
@@ -529,35 +529,35 @@ impl<T: 'static + Clone + IsCached + ZeroLamport> AccountsIndex<T> {
                 );
             }
 
-            ScanTypes::Indexed(IndexKey::VelasAccountStorage(va_storage_key)) => self
+            ScanTypes::Indexed(IndexKey::SophonAccountStorage(va_storage_key)) => self
                 .do_scan_secondary_index(
                     ancestors,
                     func,
-                    &self.velas_account_storage_index,
+                    &self.sophon_account_storage_index,
                     &va_storage_key,
                     Some(max_root),
                 ),
-            ScanTypes::Indexed(IndexKey::VelasAccountOwner(va_owner_key)) => self
+            ScanTypes::Indexed(IndexKey::SophonAccountOwner(va_owner_key)) => self
                 .do_scan_secondary_index(
                     ancestors,
                     func,
-                    &self.velas_account_owner_index,
+                    &self.sophon_account_owner_index,
                     &va_owner_key,
                     Some(max_root),
                 ),
-            ScanTypes::Indexed(IndexKey::VelasAccountOperational(va_operational_key)) => self
+            ScanTypes::Indexed(IndexKey::SophonAccountOperational(va_operational_key)) => self
                 .do_scan_secondary_index(
                     ancestors,
                     func,
-                    &self.velas_account_operational_index,
+                    &self.sophon_account_operational_index,
                     &va_operational_key,
                     Some(max_root),
                 ),
-            ScanTypes::Indexed(IndexKey::VelasRelyingOwner(va_owner_key)) => self
+            ScanTypes::Indexed(IndexKey::SophonRelyingOwner(va_owner_key)) => self
                 .do_scan_secondary_index(
                     ancestors,
                     func,
-                    &self.velas_relying_party_owner_index,
+                    &self.sophon_relying_party_owner_index,
                     &va_owner_key,
                     Some(max_root),
                 ),
@@ -972,45 +972,45 @@ impl<T: 'static + Clone + IsCached + ZeroLamport> AccountsIndex<T> {
             }
         }
 
-        // Velas account
-        if *account_owner == velas_account_program::id() {
-            match VelasAccountType::try_from(account_data) {
-                Ok(VelasAccountType::Account(account_info)) => {
-                    if account_indexes.contains(&AccountIndex::VelasAccountStorage) {
+        // Sophon account
+        if *account_owner == sophon_account_program::id() {
+            match SophonAccountType::try_from(account_data) {
+                Ok(SophonAccountType::Account(account_info)) => {
+                    if account_indexes.contains(&AccountIndex::SophonAccountStorage) {
                         let storage = account_info.find_storage_key(pubkey);
-                        self.velas_account_storage_index.insert(&storage, pubkey);
+                        self.sophon_account_storage_index.insert(&storage, pubkey);
                     }
 
-                    if account_indexes.contains(&AccountIndex::VelasAccountOwner) {
+                    if account_indexes.contains(&AccountIndex::SophonAccountOwner) {
                         for owner in account_info.owners {
                             if owner != Pubkey::default() {
-                                self.velas_account_owner_index.insert(&owner, pubkey);
+                                self.sophon_account_owner_index.insert(&owner, pubkey);
                             }
                         }
                     }
                 }
-                Ok(VelasAccountType::Storage(VAccountStorage { operationals })) => {
-                    if account_indexes.contains(&AccountIndex::VelasAccountOperational) {
+                Ok(SophonAccountType::Storage(VAccountStorage { operationals })) => {
+                    if account_indexes.contains(&AccountIndex::SophonAccountOperational) {
                         for operational in operationals {
-                            self.velas_account_operational_index
+                            self.sophon_account_operational_index
                                 .insert(&operational.pubkey, pubkey);
                         }
                     }
                 }
-                Err(err) => log::warn!("Unable to parse Velas Account: {:?}", err),
+                Err(err) => log::warn!("Unable to parse Sophon Account: {:?}", err),
             }
         }
 
-        // Velas relying party data
-        if *account_owner == velas_relying_party_program::id() {
+        // Sophon relying party data
+        if *account_owner == sophon_relying_party_program::id() {
             match RelyingPartyData::try_from(account_data) {
                 Ok(acc) => {
-                    if account_indexes.contains(&AccountIndex::VelasRelyingOwner) {
-                        self.velas_relying_party_owner_index
+                    if account_indexes.contains(&AccountIndex::SophonRelyingOwner) {
+                        self.sophon_relying_party_owner_index
                             .insert(&acc.authority, pubkey);
                     }
                 }
-                Err(err) => log::warn!("Unable to parse Velas Account: {:?}", err),
+                Err(err) => log::warn!("Unable to parse Sophon Account: {:?}", err),
             }
         }
     }

@@ -19,14 +19,14 @@ solanaInstallGlobalOpts=(
 bootstrapInstall() {
   declare v=$1
   if [[ ! -h $solanaInstallDataDir/active_release ]]; then
-    sh "$SOLANA_ROOT"/install/velas-install-init.sh "$v" "${solanaInstallGlobalOpts[@]}"
+    sh "$SOLANA_ROOT"/install/sophon-install-init.sh "$v" "${solanaInstallGlobalOpts[@]}"
   fi
   export PATH="$solanaInstallDataDir/active_release/bin/:$PATH"
 }
 
 bootstrapInstall "edge"
-velas-install-init --version
-velas-install-init edge
+sophon-install-init --version
+sophon-install-init edge
 solana-gossip --version
 solana-dos --version
 

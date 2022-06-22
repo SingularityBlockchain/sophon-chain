@@ -378,7 +378,7 @@ pub enum CliCommand {
         derived_address_seed: Option<String>,
         derived_address_program_id: Option<Pubkey>,
     },
-    // Velas EVM Commands
+    // sophon EVM Commands
     Evm(EvmCliCommand),
 }
 
@@ -622,7 +622,7 @@ pub fn parse_command(
                 crate_description!(),
                 solana_version::version!(),
             )
-            .gen_completions_to("velas", shell_choice, &mut std::io::stdout());
+            .gen_completions_to("sophon", shell_choice, &mut std::io::stdout());
             std::process::exit(0);
         }
         // Cluster Query Commands
@@ -1026,7 +1026,7 @@ fn process_airdrop(
 
         if current_balance < pre_balance.saturating_add(lamports) {
             println!("Balance unchanged");
-            println!("Run `velas confirm -v {:?}` for more info", signature);
+            println!("Run `sophon confirm -v {:?}` for more info", signature);
             Ok("".to_string())
         } else {
             Ok(build_balance_message(current_balance, false, true))

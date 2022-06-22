@@ -2116,10 +2116,10 @@ impl AccountsDb {
             IndexKey::ProgramId(key)
             | IndexKey::SplTokenMint(key)
             | IndexKey::SplTokenOwner(key)
-            | IndexKey::VelasAccountStorage(key)
-            | IndexKey::VelasAccountOwner(key)
-            | IndexKey::VelasAccountOperational(key)
-            | IndexKey::VelasRelyingOwner(key) => key,
+            | IndexKey::SophonAccountStorage(key)
+            | IndexKey::SophonAccountOwner(key)
+            | IndexKey::SophonAccountOperational(key)
+            | IndexKey::SophonRelyingOwner(key) => key,
         };
 
         if !self.account_indexes.include_key(key) {

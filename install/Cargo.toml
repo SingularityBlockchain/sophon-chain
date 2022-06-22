@@ -1,7 +1,7 @@
 [package]
 edition = "2018"
-name = "velas-install"
-description = "The Velas cluster software installer"
+name = "sophon-install"
+description = "The Sophon cluster software installer"
 version = "1.6.14"
 license = "Apache-2.0"
 homepage = "https://solana.com/"

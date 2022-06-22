@@ -227,9 +227,9 @@ default_arg --log -
 default_arg --require-tower
 
 if [[ -n $SOLANA_CUDA ]]; then
-  program=$velas_validator_cuda
+  program=$sophon_validator_cuda
 else
-  program=$velas_validator
+  program=$sophon_validator
 fi
 
 set -e
@@ -258,7 +258,7 @@ trap 'kill_node_and_exit' INT TERM ERR
 wallet() {
   (
     set -x
-    $velas_cli --keypair "$identity" --url "$rpc_url" "$@"
+    $sophon_cli --keypair "$identity" --url "$rpc_url" "$@"
   )
 }
 
@@ -274,7 +274,7 @@ setup_validator_accounts() {
       echo "Adding $node_sol to validator identity account:"
       (
         set -x
-        $velas_cli \
+        $sophon_cli \
           --keypair "$SOLANA_CONFIG_DIR/faucet.json" --url "$rpc_url" \
           transfer --allow-unfunded-recipient "$identity" "$node_sol"
       ) || return $?
@@ -291,10 +291,10 @@ setup_validator_accounts() {
   return 0
 }
 
-rpc_url=$($velas_gossip rpc-url --timeout 180 --entrypoint "$gossip_entrypoint")
+rpc_url=$($sophon_gossip rpc-url --timeout 180 --entrypoint "$gossip_entrypoint")
 
-[[ -r "$identity" ]] || $velas_keygen new --no-passphrase -so "$identity"
-[[ -r "$vote_account" ]] || $velas_keygen new --no-passphrase -so "$vote_account"
+[[ -r "$identity" ]] || $sophon_keygen new --no-passphrase -so "$identity"
+[[ -r "$vote_account" ]] || $sophon_keygen new --no-passphrase -so "$vote_account"
 
 setup_validator_accounts "$node_sol"
 

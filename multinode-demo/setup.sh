@@ -13,17 +13,17 @@ mkdir -p "$SOLANA_CONFIG_DIR"/bootstrap-validator
 if [[ -r $FAUCET_KEYPAIR ]]; then
     cp -f "$FAUCET_KEYPAIR" "$SOLANA_CONFIG_DIR"/faucet.json
 else
-    $velas_keygen new --no-passphrase -fso "$SOLANA_CONFIG_DIR"/faucet.json
+    $sophon_keygen new --no-passphrase -fso "$SOLANA_CONFIG_DIR"/faucet.json
 fi
 
 if [[ -f $BOOTSTRAP_VALIDATOR_IDENTITY_KEYPAIR ]]; then
     cp -f "$BOOTSTRAP_VALIDATOR_IDENTITY_KEYPAIR" "$SOLANA_CONFIG_DIR"/bootstrap-validator/identity.json
 else
-    $velas_keygen new --no-passphrase -so "$SOLANA_CONFIG_DIR"/bootstrap-validator/identity.json
+    $sophon_keygen new --no-passphrase -so "$SOLANA_CONFIG_DIR"/bootstrap-validator/identity.json
 fi
 
-$velas_keygen new --no-passphrase -so "$SOLANA_CONFIG_DIR"/bootstrap-validator/vote-account.json
-$velas_keygen new --no-passphrase -so "$SOLANA_CONFIG_DIR"/bootstrap-validator/stake-account.json
+$sophon_keygen new --no-passphrase -so "$SOLANA_CONFIG_DIR"/bootstrap-validator/vote-account.json
+$sophon_keygen new --no-passphrase -so "$SOLANA_CONFIG_DIR"/bootstrap-validator/stake-account.json
 
 args=(
     "$@"
@@ -48,4 +48,4 @@ default_arg --faucet-lamports 500000000000000000
 default_arg --hashes-per-tick auto
 default_arg --cluster-type devnet
 
-$velas_genesis "${args[@]}"
+$sophon_genesis "${args[@]}"
