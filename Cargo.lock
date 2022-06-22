@@ -1676,7 +1676,7 @@ dependencies = [
 [[package]]
 name = "evm"
 version = "0.23.0"
-source = "git+https://github.com/sophon/evm?branch=add-traces#dc957fd9f2b5054ae6fc55c40db95e55bbcbb2d1"
+source = "git+https://github.com/velas/evm?branch=add-traces#dc957fd9f2b5054ae6fc55c40db95e55bbcbb2d1"
 dependencies = [
  "ethereum",
  "evm-core",
@@ -1743,7 +1743,7 @@ dependencies = [
 [[package]]
 name = "evm-core"
 version = "0.23.0"
-source = "git+https://github.com/sophon/evm?branch=add-traces#dc957fd9f2b5054ae6fc55c40db95e55bbcbb2d1"
+source = "git+https://github.com/velas/evm?branch=add-traces#dc957fd9f2b5054ae6fc55c40db95e55bbcbb2d1"
 dependencies = [
  "parity-scale-codec",
  "primitive-types",
@@ -1753,7 +1753,7 @@ dependencies = [
 [[package]]
 name = "evm-gasometer"
 version = "0.23.0"
-source = "git+https://github.com/sophon/evm?branch=add-traces#dc957fd9f2b5054ae6fc55c40db95e55bbcbb2d1"
+source = "git+https://github.com/velas/evm?branch=add-traces#dc957fd9f2b5054ae6fc55c40db95e55bbcbb2d1"
 dependencies = [
  "evm-core",
  "evm-runtime",
@@ -1788,7 +1788,7 @@ dependencies = [
 [[package]]
 name = "evm-runtime"
 version = "0.23.0"
-source = "git+https://github.com/sophon/evm?branch=add-traces#dc957fd9f2b5054ae6fc55c40db95e55bbcbb2d1"
+source = "git+https://github.com/velas/evm?branch=add-traces#dc957fd9f2b5054ae6fc55c40db95e55bbcbb2d1"
 dependencies = [
  "evm-core",
  "primitive-types",
@@ -2996,7 +2996,7 @@ checksum = "33a33a362ce288760ec6a508b94caaec573ae7d3bbbd91b87aa0bad4456839db"
 [[package]]
 name = "librocksdb-sys"
 version = "6.20.3"
-source = "git+https://github.com/sophon/rust-rocksdb?branch=transaction#bbd2d97e9e8b8d5cfb5118e4fc7998b21d860779"
+source = "git+https://github.com/velas/rust-rocksdb?branch=transaction#bbd2d97e9e8b8d5cfb5118e4fc7998b21d860779"
 dependencies = [
  "bindgen",
  "cc",
@@ -4647,7 +4647,7 @@ dependencies = [
 [[package]]
 name = "rocksdb"
 version = "0.17.0"
-source = "git+https://github.com/sophon/rust-rocksdb?branch=transaction#bbd2d97e9e8b8d5cfb5118e4fc7998b21d860779"
+source = "git+https://github.com/velas/rust-rocksdb?branch=transaction#bbd2d97e9e8b8d5cfb5118e4fc7998b21d860779"
 dependencies = [
  "libc",
  "librocksdb-sys",
@@ -8045,7 +8045,7 @@ dependencies = [
 [[package]]
 name = "triedb"
 version = "0.5.0"
-source = "git+https://github.com/sophon/triedb?branch=feat/gc-simple#9675443fe9b593b9dcf3e677c08ac0ce0d2f13c3"
+source = "git+https://github.com/velas/triedb?branch=feat/gc-simple#9675443fe9b593b9dcf3e677c08ac0ce0d2f13c3"
 dependencies = [
  "anyhow",
  "dashmap",
@@ -8097,7 +8097,7 @@ dependencies = [
 [[package]]
 name = "txpool"
 version = "1.0.0-alpha"
-source = "git+https://github.com/sophon/transaction-pool?tag=v1.0.0-alpha#2f532dd0c1f7db02bea86e5d492d0eb428fcfe00"
+source = "git+https:///transaction-pool?tag=v1.0.0-alpha#2f532dd0c1f7db02bea86e5d492d0eb428fcfe00"
 dependencies = [
  "log 0.4.14",
  "smallvec 0.6.14",

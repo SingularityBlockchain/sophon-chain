@@ -25,7 +25,7 @@ pub struct GithubRelease {
 impl GithubRelease {
     pub fn download_url(&self, target: &str) -> String {
         format!(
-            "https://github.com/sophon/sophon-chain/releases/download/{}/sophon-release-{}.tar.bz2",
+            "https://github.com/SingularityBlockchain/sophon-chain/releases/download/{}/sophon-release-{}.tar.bz2",
             self.tag_name, target
         )
     }

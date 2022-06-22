@@ -30,7 +30,7 @@ $ sudo apt-get install libssl-dev libudev-dev pkg-config zlib1g-dev llvm clang m
 ## **2. Download the source code.**
 
 ```bash
-$ git clone https://github.com/sophon/sophon-chain.git
+$ git https://github.com/SingularityBlockchain/sophon-chain.git
 $ cd sophon-chain
 ```
 
