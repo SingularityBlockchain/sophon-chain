@@ -24,8 +24,8 @@ lazy_static! {
     static ref SYSVAR_PROGRAM_ID: Pubkey = sysvar::id();
     static ref TOKEN_PROGRAM_ID: Pubkey = spl_token_id_v2_0();
     static ref VOTE_PROGRAM_ID: Pubkey = solana_vote_program::id();
-    static ref VELAS_ACCOUNT_PROGRAM_ID: Pubkey = sophon_account_program::id();
-    static ref VELAS_RELYING_PARTY_PROGRAM_ID: Pubkey = sophon_relying_party_program::id();
+    static ref SOPHON_ACCOUNT_PROGRAM_ID: Pubkey = sophon_account_program::id();
+    static ref SOPHON_RELYING_PARTY_PROGRAM_ID: Pubkey = sophon_relying_party_program::id();
     pub static ref PARSABLE_PROGRAM_IDS: HashMap<Pubkey, ParsableAccount> = {
         let mut m = HashMap::new();
         m.insert(
@@ -38,9 +38,9 @@ lazy_static! {
         m.insert(*STAKE_PROGRAM_ID, ParsableAccount::Stake);
         m.insert(*SYSVAR_PROGRAM_ID, ParsableAccount::Sysvar);
         m.insert(*VOTE_PROGRAM_ID, ParsableAccount::Vote);
-        m.insert(*VELAS_ACCOUNT_PROGRAM_ID, ParsableAccount::SophonAccount);
+        m.insert(*SOPHON_ACCOUNT_PROGRAM_ID, ParsableAccount::SophonAccount);
         m.insert(
-            *VELAS_RELYING_PARTY_PROGRAM_ID,
+            *SOPHON_RELYING_PARTY_PROGRAM_ID,
             ParsableAccount::SophonRelyingParty,
         );
         m

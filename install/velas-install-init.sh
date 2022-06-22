@@ -16,9 +16,9 @@
 { # this ensures the entire script is downloaded #
     
     if [ -z "$SOLANA_DOWNLOAD_ROOT" ]; then
-        SOLANA_DOWNLOAD_ROOT="https://github.com/velas/sophon-chain/releases/download/"
+        SOLANA_DOWNLOAD_ROOT="https://github.com/SingularityBlockchain/sophon-chain/releases/download/"
     fi
-    GH_LATEST_RELEASE="https://api.github.com/repos/sophon/sophon-chain/releases/latest"
+    GH_LATEST_RELEASE="https://api.github.com/SingularityBlockchain/sophon-chain/releases/latest"
     
     set -e
     
@@ -111,7 +111,7 @@ EOF
         if [ -z "$1" ]; then
             #shellcheck disable=SC2086
             ignore "$solana_install_init" $SOLANA_INSTALL_INIT_ARGS "$(echo $release | cut -c2-)";
-            elif [ "$1" = "LATEST_VELAS_RELEASE" ]; then
+            elif [ "$1" = "LATEST_SOPHON_RELEASE" ]; then
             ignore "$solana_install_init" $SOLANA_INSTALL_INIT_ARGS "$(echo $release | cut -c2-)"
         else
             ignore "$solana_install_init" "$@"

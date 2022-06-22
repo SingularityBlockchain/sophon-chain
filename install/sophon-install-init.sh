@@ -111,7 +111,7 @@ EOF
         if [ -z "$1" ]; then
             #shellcheck disable=SC2086
             ignore "$solana_install_init" $SOLANA_INSTALL_INIT_ARGS "$(echo $release | cut -c2-)";
-            elif [ "$1" = "LATEST_VELAS_RELEASE" ]; then
+            elif [ "$1" = "LATEST_SOPHON_RELEASE" ]; then
             ignore "$solana_install_init" $SOLANA_INSTALL_INIT_ARGS "$(echo $release | cut -c2-)"
         else
             ignore "$solana_install_init" "$@"
