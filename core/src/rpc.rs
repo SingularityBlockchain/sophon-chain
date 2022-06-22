@@ -94,7 +94,7 @@ use std::{
 };
 
 use tracing_attributes::instrument;
-use sophon_account_program::{SophonAccountType, ACCOUNT_LEN as VELAS_ACCOUNT_SIZE};
+use sophon_account_program::{SophonAccountType, ACCOUNT_LEN as SOPHON_ACCOUNT_SIZE};
 use sophon_relying_party_program::RelyingPartyData;
 
 pub const MAX_REQUEST_PAYLOAD_SIZE: usize = 200 * (1 << 10); // 200kB perviously: 50 * (1 << 10); // 50kB
@@ -2164,7 +2164,7 @@ impl JsonRpcRequestProcessor {
         // this filter doesn't dismiss accounts which are not related to specified storage_key
         let is_target_sophon_account = |account: &AccountSharedData| -> bool {
             account.owner == sophon_account_program::id()
-                && account.data.len() == VELAS_ACCOUNT_SIZE
+                && account.data.len() == SOPHON_ACCOUNT_SIZE
                 && matches!(
                     SophonAccountType::try_from(account.data.as_slice()),
                     Ok(SophonAccountType::Account(_account_info))

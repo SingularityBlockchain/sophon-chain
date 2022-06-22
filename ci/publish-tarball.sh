@@ -69,7 +69,7 @@ windows)
   ;;
 esac
 
-RELEASE_BASENAME="${RELEASE_BASENAME:=velas-release}"
+RELEASE_BASENAME="${RELEASE_BASENAME:=sophon-release}"
 TARBALL_BASENAME="${TARBALL_BASENAME:="$RELEASE_BASENAME"}"
 
 echo --- Creating release tarball
