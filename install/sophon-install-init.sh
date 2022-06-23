@@ -103,7 +103,8 @@ EOF
         ensure downloader "$download_url" "$solana_install_init"
         ensure chmod u+x "$solana_install_init"
         if [ ! -x "$solana_install_init" ]; then
-            printf '%s\n' "Cannot execute $solana_install_init (likely because of mounting /tmp as noexec)." 1>&2
+            echo "such file exists"
+            printf '%s\n' "Cannot execute $solana_install_init \(likely because of mounting /tmp as noexec\)." 1>&2
             printf '%s\n' "Please copy the file to a location where you can execute binaries and run ./sophon-install-init." 1>&2
             exit 1
         fi
@@ -131,7 +132,7 @@ EOF
     
     need_cmd() {
         if ! check_cmd "$1"; then
-            err "need '$1' (command not found)"
+            err "need '$1' \(command not found\)"
         fi
     }
     
