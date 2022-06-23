@@ -16,7 +16,7 @@
 { # this ensures the entire script is downloaded #
     
     if [ -z "$SOLANA_DOWNLOAD_ROOT" ]; then
-        SOLANA_DOWNLOAD_ROOT=https://github.com/SingularityBlockchain/sophon-chain/releases/download/"
+        SOLANA_DOWNLOAD_ROOT="https://github.com/SingularityBlockchain/sophon-chain/releases/download/"
     fi
     GH_LATEST_RELEASE="https://api.github.com/repos/SingularityBlockchain/sophon-chain/releases/latest"
     
@@ -79,6 +79,7 @@ EOF
         
         # Check for SOLANA_RELEASE environment variable override.  Otherwise fetch
         # the latest release tag from github
+
         if [ -n "$SOLANA_RELEASE" ]; then
             release="$SOLANA_RELEASE"
         else
