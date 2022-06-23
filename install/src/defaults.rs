@@ -3,7 +3,7 @@ pub const JSON_RPC_URL: &str = "http://api.devnet.sophon.com";
 /// Returns last 30 releases from GitHub Release REST API, could be
 /// increased up to 100 (?per_page=100). If we need a list with more
 /// than 100 releases, we would need to implement pagination (?page_id=2)
-pub const GITHUB_RELEASES_URL: &str = "https://api.github.com/repos/sophon/sophon-chain/releases";
+pub const GITHUB_RELEASES_URL: &str = "https://api.github.com/repos/SingularityBlockchain/sophon-chain/releases";
 
 lazy_static! {
     pub static ref CONFIG_PATH: Option<String> = {
