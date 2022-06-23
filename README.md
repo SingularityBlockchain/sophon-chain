@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://sophon.com">
-    <img alt="Sophon chain" src="https://i.imgur.com/1AHYxYP.png" width="250" />
+    <img alt="Sophon chain" src="https://cdna.artstation.com/p/assets/images/images/018/337/090/large/m-v-8-night-fhythm-flower-001.jpg?1559008037" width="250" />
   </a>
 </p>
 
