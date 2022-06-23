@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://sophon.com">
-    <img alt="Sophon chain" src="https://i.imgur.com/1AHYxYP.png" width="250" />
+    <img alt="Sophon chain" src="https://i.imgur.com/kRcwxZL.png" width="300" />
   </a>
 </p>
 
