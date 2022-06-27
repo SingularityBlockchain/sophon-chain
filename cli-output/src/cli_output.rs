@@ -1182,7 +1182,7 @@ impl fmt::Display for CliStakeHistory {
                 if self.use_lamports_unit {
                     "lamports"
                 } else {
-                    "VLX"
+                    "SOPHON"
                 }
             )?;
         }
@@ -1606,7 +1606,7 @@ impl fmt::Display for CliAccountBalances {
                 f,
                 "{:<44}  {}",
                 account.address,
-                &format!("{} VLX", lamports_to_sol(account.lamports))
+                &format!("{} SOPHON", lamports_to_sol(account.lamports))
             )?;
         }
         Ok(())
@@ -1641,16 +1641,16 @@ impl VerboseDisplay for CliSupply {}
 
 impl fmt::Display for CliSupply {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        writeln_name_value(f, "Total:", &format!("{} VLX", lamports_to_sol(self.total)))?;
+        writeln_name_value(f, "Total:", &format!("{} SOPHON", lamports_to_sol(self.total)))?;
         writeln_name_value(
             f,
             "Circulating:",
-            &format!("{} VLX", lamports_to_sol(self.circulating)),
+            &format!("{} SOPHON", lamports_to_sol(self.circulating)),
         )?;
         writeln_name_value(
             f,
             "Non-Circulating:",
-            &format!("{} VLX", lamports_to_sol(self.non_circulating)),
+            &format!("{} SOPHON", lamports_to_sol(self.non_circulating)),
         )?;
         if self.print_accounts {
             writeln!(f)?;

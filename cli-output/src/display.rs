@@ -58,7 +58,7 @@ pub fn build_balance_message_with_config(
             let ess = if lamports == 1 { "" } else { "s" };
             format!(" lamport{}", ess)
         } else {
-            " VLX".to_string()
+            " SOPHON".to_string()
         }
     } else {
         "".to_string()

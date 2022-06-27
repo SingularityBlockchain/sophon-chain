@@ -43,7 +43,6 @@ Recipient                                     Expected Balance
 UKUcTXgbeTYh65RaVV5gSf6xBHevqHvAXMo3e8Q6np8k  43
 ```
 
-
 Example transaction log after:
 
 ```bash
@@ -120,22 +119,22 @@ solana-tokens distribute-stake --stake-account-address <ACCOUNT_ADDRESS> \
     --stake-authority <KEYPAIR> --withdraw-authority <KEYPAIR> --fee-payer <KEYPAIR>
 ```
 
-Currently, this will subtract 1 VLX from each allocation and store it the
-recipient address. That VLX can be used to pay transaction fees on staking
+Currently, this will subtract 1 SOPHON from each allocation and store it the
+recipient address. That SOPHON can be used to pay transaction fees on staking
 operations such as delegating stake. The rest of the allocation is put in
 a stake account. The new stake account address is output in the transaction
 log.
 
 ## Distribute SPL tokens
 
-Distributing SPL Tokens works very similarly to distributing VLX, but requires
+Distributing SPL Tokens works very similarly to distributing SOPHON, but requires
 the `--owner` parameter to sign transactions. Each recipient account must be an
 system account that will own an Associated Token Account for the SPL Token mint.
 The Associated Token Account will be created, and funded by the fee_payer, if it
 does not already exist.
 
 Send SPL tokens to the recipients in `<RECIPIENTS_CSV>`.
-*NOTE:* the CSV expects SPL-token amounts in raw format (no decimals)
+_NOTE:_ the CSV expects SPL-token amounts in raw format (no decimals)
 
 Example recipients.csv:
 
@@ -188,7 +187,7 @@ C56nwrDVFpPrqwGYsTgQxv1ZraTh81H14PV4RHvZe36s                    10.000
 
 ### Calculate what tokens should be sent
 
-As with VLX, you can List the differences between a list of expected
+As with SOPHON, you can List the differences between a list of expected
 distributions and the record of what transactions have already been sent using
 the `--dry-run` parameter, or `solana-tokens balances`.
 

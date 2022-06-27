@@ -12,7 +12,7 @@ use solana_client::rpc_client::RpcClient;
 use solana_sdk::{
     commitment_config::CommitmentConfig,
     message::Message,
-    native_token::{lamports_to_sol, LAMPORTS_PER_VLX},
+    native_token::{lamports_to_sol, LAMPORTS_PER_SOPHON},
     transaction::Transaction,
 };
 
@@ -63,7 +63,7 @@ impl EvmSubCommands for App<'_, '_> {
                              .index(2)
                              .takes_value(true)
                              .value_name("AMOUNT")
-                             .help("Amount in VLX"))
+                             .help("Amount in SOPHON"))
                         .arg(Arg::with_name("lamports")
                              .long("lamports")
                              .help("Amount in lamports")))
@@ -428,7 +428,7 @@ pub fn parse_evm_subcommand(matches: &ArgMatches<'_>) -> Result<CliCommandInfo, 
             let address = value_t_or_exit!(matches, "evm_address", evm::Address);
             let mut amount = value_t_or_exit!(matches, "amount", u64);
             if !matches.is_present("lamports") {
-                amount *= LAMPORTS_PER_VLX;
+                amount *= LAMPORTS_PER_SOPHON;
             }
 
             EvmCliCommand::TransferToEvm { address, amount }

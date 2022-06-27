@@ -582,9 +582,9 @@ fn process_tx(
     if let TransactionAction::Call(addr) = tx.action {
         use solana_evm_loader_program::precompiles::*;
 
-        if addr == *ETH_TO_VLX_ADDR {
+        if addr == *ETH_TO_SOPHON_ADDR {
             debug!("Found transferToNative transaction");
-            match ETH_TO_VLX_CODE.parse_abi(&tx.input) {
+            match ETH_TO_SOPHON_CODE.parse_abi(&tx.input) {
                 Ok(pk) => {
                     info!("Adding account to meta = {}", pk);
                     meta_keys.insert(pk);

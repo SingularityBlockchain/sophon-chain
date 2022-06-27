@@ -11,7 +11,7 @@ args=(
   --no-poh-speed-test
 )
 airdrops_enabled=1
-node_sol=500 # 500 SOL: number of VLX to airdrop the node for transaction fees and vote account rent exemption (ignored if airdrops_enabled=0)
+node_sol=500 # 500 SOL: number of SOPHON to airdrop the node for transaction fees and vote account rent exemption (ignored if airdrops_enabled=0)
 label=
 identity=
 vote_account=
@@ -35,7 +35,7 @@ OPTIONS:
   --init-complete-file FILE - create this file, if it doesn't already exist, once node initialization is complete
   --label LABEL             - Append the given label to the configuration files, useful when running
                               multiple validators in the same workspace
-  --node-vlx VLX            - Number of VLX this node has been funded from the genesis config (default: $node_sol)
+  --node-vlx SOPHON            - Number of SOPHON this node has been funded from the genesis config (default: $node_sol)
   --no-voting               - start node without vote signer
   --rpc-port port           - custom RPC port for this node
   --no-restart              - do not restart the node if it exits

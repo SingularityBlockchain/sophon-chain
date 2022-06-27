@@ -196,8 +196,8 @@ Evm loader program is solana native program with custom entrypoint that execute 
 
 Swap from evm implementation:
 Swap from evm world is done by implementing precompile that modify solana state,
-when any transaction make call to specific address `ETH_TO_VLX_ADDR` program interupted and `ETH_TO_VLX_CODE` is called.
-When it is called, it expect `recipient` address as argument, also this precompile is done as payable, so it is also expect internal `value` argument, before call this value is substracted from caller account. And `ETH_TO_VLX_CODE` is transfer it from EvmState account to account that it tries to find by `recipient` address.
+when any transaction make call to specific address `ETH_TO_SOPHON_ADDR` program interupted and `ETH_TO_SOPHON_CODE` is called.
+When it is called, it expect `recipient` address as argument, also this precompile is done as payable, so it is also expect internal `value` argument, before call this value is substracted from caller account. And `ETH_TO_SOPHON_CODE` is transfer it from EvmState account to account that it tries to find by `recipient` address.
 
 Problems that we discover before:
 

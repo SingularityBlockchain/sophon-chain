@@ -8624,7 +8624,7 @@ pub(crate) mod tests {
         let state = evm_state.get_account_state(receiver).unwrap_or_default();
         assert_eq!(state.balance, 0.into());
         let state_swapper = evm_state
-            .get_account_state(*solana_evm_loader_program::precompiles::ETH_TO_VLX_ADDR)
+            .get_account_state(*solana_evm_loader_program::precompiles::ETH_TO_SOPHON_ADDR)
             .unwrap_or_default();
         assert_eq!(state_swapper.nonce, 1.into());
         assert_eq!(state_swapper.balance, 0.into());
@@ -8690,7 +8690,7 @@ pub(crate) mod tests {
         assert_eq!(state.balance, 0.into());
         assert_eq!(state.nonce, 1.into());
         let state_swapper = evm_state
-            .get_account_state(*solana_evm_loader_program::precompiles::ETH_TO_VLX_ADDR)
+            .get_account_state(*solana_evm_loader_program::precompiles::ETH_TO_SOPHON_ADDR)
             .unwrap_or_default();
         assert_eq!(state_swapper.nonce, 1.into());
         assert_eq!(state_swapper.balance, 0.into());
@@ -8747,7 +8747,7 @@ pub(crate) mod tests {
             solana_evm_loader_program::scope::evm::lamports_to_gwei(20000)
         ); // 10^9 times bigger
         let state_swapper = evm_state
-            .get_account_state(*solana_evm_loader_program::precompiles::ETH_TO_VLX_ADDR)
+            .get_account_state(*solana_evm_loader_program::precompiles::ETH_TO_SOPHON_ADDR)
             .unwrap_or_default();
         assert_eq!(state_swapper.nonce, 1.into());
         assert_eq!(state_swapper.balance, 0.into());

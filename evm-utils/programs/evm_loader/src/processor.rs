@@ -122,7 +122,7 @@ impl EvmProcessor {
         };
 
         if register_swap_tx_in_evm {
-            executor.reset_balance(*precompiles::ETH_TO_VLX_ADDR, ignore_reset_on_cleared)
+            executor.reset_balance(*precompiles::ETH_TO_SOPHON_ADDR, ignore_reset_on_cleared)
         }
 
         // When old error handling, manually convert EvmError to InstructionError
@@ -367,7 +367,7 @@ impl EvmProcessor {
         executor.deposit(evm_address, gweis);
         if register_swap_tx_in_evm {
             executor.register_swap_tx_in_evm(
-                *precompiles::ETH_TO_VLX_ADDR,
+                *precompiles::ETH_TO_SOPHON_ADDR,
                 evm_address,
                 gweis,
             )
@@ -1278,9 +1278,9 @@ mod test {
             nonce: 1.into(),
             gas_price: 1.into(),
             gas_limit: 300000.into(),
-            action: TransactionAction::Call(*precompiles::ETH_TO_VLX_ADDR),
+            action: TransactionAction::Call(*precompiles::ETH_TO_SOPHON_ADDR),
             value: crate::scope::evm::lamports_to_gwei(lamports_to_send_back),
-            input: precompiles::ETH_TO_VLX_CODE
+            input: precompiles::ETH_TO_SOPHON_CODE
                 .abi
                 .encode_input(&[ethabi::Token::FixedBytes(fake_user_id.to_bytes().to_vec())])
                 .unwrap(),
@@ -1310,7 +1310,7 @@ mod test {
             state = committed.next_incomming(0);
             assert_eq!(
                 state
-                    .get_account_state(*precompiles::ETH_TO_VLX_ADDR)
+                    .get_account_state(*precompiles::ETH_TO_SOPHON_ADDR)
                     .unwrap()
                     .balance,
                 0.into()
@@ -1415,9 +1415,9 @@ mod test {
             nonce: 0.into(),
             gas_price: 1.into(),
             gas_limit: 300000.into(),
-            action: TransactionAction::Call(*precompiles::ETH_TO_VLX_ADDR),
+            action: TransactionAction::Call(*precompiles::ETH_TO_SOPHON_ADDR),
             value: crate::scope::evm::lamports_to_gwei(lamports_to_send_back),
-            input: precompiles::ETH_TO_VLX_CODE
+            input: precompiles::ETH_TO_SOPHON_CODE
                 .abi
                 .encode_input(&[ethabi::Token::FixedBytes(user_id.to_bytes().to_vec())])
                 .unwrap(),
@@ -1448,7 +1448,7 @@ mod test {
             state = committed.next_incomming(0);
             assert_eq!(
                 state
-                    .get_account_state(*precompiles::ETH_TO_VLX_ADDR)
+                    .get_account_state(*precompiles::ETH_TO_SOPHON_ADDR)
                     .unwrap()
                     .balance,
                 0.into()
@@ -1557,9 +1557,9 @@ mod test {
             nonce: 0.into(),
             gas_price: 1.into(),
             gas_limit: 300000.into(),
-            action: TransactionAction::Call(*precompiles::ETH_TO_VLX_ADDR),
+            action: TransactionAction::Call(*precompiles::ETH_TO_SOPHON_ADDR),
             value: crate::scope::evm::lamports_to_gwei(lamports_to_send_back),
-            input: precompiles::ETH_TO_VLX_CODE
+            input: precompiles::ETH_TO_SOPHON_CODE
                 .abi
                 .encode_input(&[ethabi::Token::FixedBytes(user_id.to_bytes().to_vec())])
                 .unwrap(),

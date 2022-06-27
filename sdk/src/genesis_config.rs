@@ -323,7 +323,7 @@ impl fmt::Display for GenesisConfig {
              {:?}\n\
              {:?}\n\
              {:?}\n\
-             Capitalization: {} VLX in {} accounts\n\
+             Capitalization: {} SOPHON in {} accounts\n\
              Native instruction processors: {:#?}\n\
              Rewards pool: {:#?}\n\
              EVM chain id: {}\n\

@@ -47,14 +47,14 @@ async fn main() {
                 .alias("cap")
                 .value_name("NUM")
                 .takes_value(true)
-                .help("Request limit for time slice, in VLX"),
+                .help("Request limit for time slice, in SOPHON"),
         )
         .arg(
             Arg::with_name("per_request_cap")
                 .long("per-request-cap")
                 .value_name("NUM")
                 .takes_value(true)
-                .help("Request limit for a single request, in VLX"),
+                .help("Request limit for a single request, in SOPHON"),
         )
         .arg(
             Arg::with_name("allowed_ip")

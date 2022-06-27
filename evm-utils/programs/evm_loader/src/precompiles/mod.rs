@@ -11,7 +11,7 @@ mod builtins;
 mod compatibility;
 mod errors;
 pub use abi_parse::*;
-pub use builtins::{ETH_TO_VLX_ADDR, ETH_TO_VLX_CODE};
+pub use builtins::{ETH_TO_SOPHON_ADDR, ETH_TO_SOPHON_CODE};
 pub use compatibility::extend_precompile_map;
 pub use errors::PrecompileErrors;
 
@@ -69,9 +69,9 @@ pub static NATIVE_CONTRACTS: Lazy<HashMap<H160, BuiltinEval>> = Lazy::new(|| {
     let mut native_contracts = HashMap::new();
 
     let eth_to_sol: BuiltinEval =
-        &|function_abi_input, cx| (*ETH_TO_VLX_CODE).eval(function_abi_input, cx);
+        &|function_abi_input, cx| (*ETH_TO_SOPHON_CODE).eval(function_abi_input, cx);
     assert!(native_contracts
-        .insert(*ETH_TO_VLX_ADDR, eth_to_sol)
+        .insert(*ETH_TO_SOPHON_ADDR, eth_to_sol)
         .is_none());
     native_contracts
 });

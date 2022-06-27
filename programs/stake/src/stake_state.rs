@@ -30,7 +30,7 @@ use std::{collections::HashSet, convert::TryFrom};
 pub const MIN_DELEGATE_STAKE_AMOUNT: u64 = 0;
 
 /// Amount of stake to be in majority = 1M
-pub const MIN_STAKERS_TO_BE_MAJORITY: u64 = 1_000_000 * solana_sdk::native_token::LAMPORTS_PER_VLX;
+pub const MIN_STAKERS_TO_BE_MAJORITY: u64 = 1_000_000 * solana_sdk::native_token::LAMPORTS_PER_SOPHON;
 
 /// Number of stakers with lamports more than 1M, to start filtering = 19
 pub const NUM_MAJOR_STAKERS_FOR_FILTERING: usize = 19;
@@ -3979,7 +3979,7 @@ mod tests {
         let mut vote_state = VoteState::default();
 
         // bootstrap means fully-vested stake at epoch 0 with
-        //  10_000_000 VLX is a big but not unreasaonable stake
+        //  10_000_000 SOPHON is a big but not unreasaonable stake
         let stake = Stake::new(
             native_token::sol_to_lamports(10_000_000f64),
             &Pubkey::default(),
@@ -6176,9 +6176,9 @@ mod tests {
     fn test_dbg_stake_minimum_balance() {
         let minimum_balance = Rent::default().minimum_balance(std::mem::size_of::<StakeState>());
         panic!(
-            "stake minimum_balance: {} lamports, {} VLX",
+            "stake minimum_balance: {} lamports, {} SOPHON",
             minimum_balance,
-            minimum_balance as f64 / solana_sdk::native_token::LAMPORTS_PER_VLX as f64
+            minimum_balance as f64 / solana_sdk::native_token::LAMPORTS_PER_SOPHON as f64
         );
     }
 

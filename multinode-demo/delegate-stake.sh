@@ -32,7 +32,7 @@ function get_cluster_version {
 
 function get_token_capitalization {
     totalSupplyLamports="$(curl -s -X POST -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","id":1, "method":"getTotalSupply"}' "$url" | cut -d , -f 2 | cut -d : -f 2)"
-    totalSupplySol=$((totalSupplyLamports / LAMPORTS_PER_VLX))
+    totalSupplySol=$((totalSupplyLamports / LAMPORTS_PER_SOPHON))
     
     printf "\n--- Token Capitalization ---\n"
     printf "Total token capitalization %'d SOL\n" "$totalSupplySol"
@@ -55,7 +55,7 @@ for account in ${accountBalancesLamports[@]}; do
     totalAccountBalancesLamports=$((totalAccountBalancesLamports + account))
     numberOfAccounts=$((numberOfAccounts + 1))
 done
-totalAccountBalancesSol=$((totalAccountBalancesLamports / LAMPORTS_PER_VLX))
+totalAccountBalancesSol=$((totalAccountBalancesLamports / LAMPORTS_PER_SOPHON))
 
 printf "\n--- %s Account Balance Totals ---\n" "$PROGRAM_NAME"
 printf "Number of %s Program accounts: %'.f\n" "$PROGRAM_NAME" "$numberOfAccounts"
@@ -91,7 +91,7 @@ grandTotalAccountBalancesSol=$((systemAccountBalanceTotalSol + stakeAccountBalan
 grandTotalAccountBalancesLamports=$((systemAccountBalanceTotalLamports + stakeAccountBalanceTotalLamports + voteAccountBalanceTotalLamports + configAccountBalanceTotalLamports))
 
 printf "\n--- Total Token Distribution in all Account Balances ---\n"
-printf "Total VLX in all Account Balances: %'d\n" "$grandTotalAccountBalancesSol"
+printf "Total SOPHON in all Account Balances: %'d\n" "$grandTotalAccountBalancesSol"
 printf "Total Lamports in all Account Balances: %'d\n" "$grandTotalAccountBalancesLamports"
 }
 
@@ -99,7 +99,7 @@ url=$1
 [[ -n $url ]] || usage "Missing required RPC URL"
 shift
 
-LAMPORTS_PER_VLX=1000000000 # 1 billion
+LAMPORTS_PER_SOPHON=1000000000 # 1 billion
 
 stakeAccountBalanceTotalSol=
 systemAccountBalanceTotalSol=

@@ -880,9 +880,9 @@ fn call_inner(
             .collect();
 
         // Shortcut for swap tokens to native, will add solana account to transaction.
-        if address == *ETH_TO_VLX_ADDR {
+        if address == *ETH_TO_SOPHON_ADDR {
             debug!("Found transferToNative transaction");
-            match ETH_TO_VLX_CODE.parse_abi(&input) {
+            match ETH_TO_SOPHON_CODE.parse_abi(&input) {
                 Ok(pk) => {
                     info!("Adding account to meta = {}", pk);
 
@@ -903,7 +903,7 @@ fn call_inner(
     // system transfers always set s = 0x1
     if Some(Hex(U256::from(0x1))) == tx.s {
         // check if it native swap, then predeposit, amount, to pass transaction
-        if caller == *ETH_TO_VLX_ADDR {
+        if caller == *ETH_TO_SOPHON_ADDR {
             let amount = value + gas_limit * gas_price;
             executor.deposit(caller, amount)
         }

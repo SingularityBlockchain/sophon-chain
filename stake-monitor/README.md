@@ -1,4 +1,5 @@
 ## Overview
+
 `solana-stake-monitor` is a utility that scans all transactions to ensure that stake accounts remain in compliance with the following rules:
 
 1. The stake account must be created after genesis
@@ -8,10 +9,11 @@
 1. Stake accounts split from a compliant stake account remain compliant, and the "compliant balance" is adjusted accordingly for the original stake account
 
 In terms of `solana` command-line subcommands:
-* `create-stake-account`: Creates a compliant stake account provided the `--lockup-date`, `--lockup-epoch`, or `--custodian` options are not specified
-* `delegate-stake` / `deactivate-stake` / `stake-authorize` / `split-stake`: These commands do not affect compliance
-* `withdraw-stake` / `stake-set-lockup`: These commands will cause non-compliance
-* `transfer`:  Any additional funds transferred after `create-stake-account` are excluded from the "compliant balance"
+
+- `create-stake-account`: Creates a compliant stake account provided the `--lockup-date`, `--lockup-epoch`, or `--custodian` options are not specified
+- `delegate-stake` / `deactivate-stake` / `stake-authorize` / `split-stake`: These commands do not affect compliance
+- `withdraw-stake` / `stake-set-lockup`: These commands will cause non-compliance
+- `transfer`: Any additional funds transferred after `create-stake-account` are excluded from the "compliant balance"
 
 System accounts can also be manually enrolled with the `solana-stake-monitor enroll` subcommand.
-An enrolled system account must always maintain a balance greater than the balance it had at enrollment minus 1 VLX.
+An enrolled system account must always maintain a balance greater than the balance it had at enrollment minus 1 SOPHON.

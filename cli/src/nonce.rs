@@ -77,7 +77,7 @@ impl NonceSubCommands for App<'_, '_> {
                         .takes_value(true)
                         .required(true)
                         .validator(is_amount_or_all)
-                        .help("The amount to load the nonce account with, in VLX; accepts keyword ALL"),
+                        .help("The amount to load the nonce account with, in SOPHON; accepts keyword ALL"),
                 )
                 .arg(
                     pubkey!(Arg::with_name(NONCE_AUTHORITY_ARG.name)
@@ -132,12 +132,12 @@ impl NonceSubCommands for App<'_, '_> {
                     Arg::with_name("lamports")
                         .long("lamports")
                         .takes_value(false)
-                        .help("Display balance in lamports instead of VLX"),
+                        .help("Display balance in lamports instead of SOPHON"),
                 ),
         )
         .subcommand(
             SubCommand::with_name("withdraw-from-nonce-account")
-                .about("Withdraw VLX from the nonce account")
+                .about("Withdraw SOPHON from the nonce account")
                 .arg(
                     pubkey!(Arg::with_name("nonce_account_pubkey")
                         .index(1)
@@ -150,7 +150,7 @@ impl NonceSubCommands for App<'_, '_> {
                         .index(2)
                         .value_name("RECIPIENT_ADDRESS")
                         .required(true),
-                        "The account to which the VLX should be transferred. "),
+                        "The account to which the SOPHON should be transferred. "),
                 )
                 .arg(
                     Arg::with_name("amount")
@@ -159,7 +159,7 @@ impl NonceSubCommands for App<'_, '_> {
                         .takes_value(true)
                         .required(true)
                         .validator(is_amount)
-                        .help("The amount to withdraw from the nonce account, in VLX"),
+                        .help("The amount to withdraw from the nonce account, in SOPHON"),
                 )
                 .arg(nonce_authority_arg()),
         )
